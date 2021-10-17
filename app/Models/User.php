@@ -68,4 +68,9 @@ class User extends Authenticatable
     {
         return $this->groups()->save($group);
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id');
+    }
 }

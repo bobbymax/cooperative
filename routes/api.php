@@ -23,6 +23,19 @@ Route::apiResource('settings', 'SettingController');
 Route::apiResource('users', 'UserController');
 Route::apiResource('gradeLevels', 'GradeLevelController');
 
+
+// Procurement Module Routes
+Route::apiResource('serviceCategories', 'ServiceCategoryController');
+Route::apiResource('tags', 'TagController');
+Route::apiResource('projects', 'ProjectCotroller');
+Route::apiResource('uploads', 'UploadController');
+Route::apiResource('companies', 'CompanyController');
+
+// Budget Control Routes
+Route::apiResource('budgetHeads', 'BudgetHeadController');
+Route::apiResource('subBudgetHeads', 'SubBudgetHeadController');
+Route::apiResource('funds', 'FundController');
+
 Route::fallback(function () {
     return response()->json([
         'message' => 'Page Not Found. If error persists, contact info@ncdmb.gov.ng'
