@@ -5,14 +5,14 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'L5 Swagger UI',
+                'title' => 'Upper Basin ERP API Documentation',
             ],
 
             'routes' => [
                 /*
                  * Route for accessing api documentation interface
                 */
-                'api' => '/docs',
+                'api' => '/docs', //Url to access Swagger documentation - Localhost/docs
             ],
             'paths' => [
                 /*

@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Validator;
  *        )
  *     )
  * )
+ *
  */
 class LoginController extends Controller
 {
