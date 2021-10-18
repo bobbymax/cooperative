@@ -9,6 +9,99 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
+/**
+     * @OA\Post(
+     ** path="/roles",
+     *   tags={"role"},
+     *   summary="manage user roles",
+     *   operationId="roles",
+     *
+     *   @OA\Parameter(
+     *      name="name",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   @OA\Parameter(
+     *      name="max_slots",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="start_date",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="date"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="expiry_date",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="date"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="cannot_expire",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="boolean"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="permissions",
+     *      description="A checkbox of roles",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="list"
+     *      )
+     * ),
+     *      @OA\Parameter(
+     *      name="isSuper",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="boolean"
+     *      )
+     * ),
+     *   @OA\Response(
+     *      response=200,
+     *       description="Success",
+     *      @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Error"
+     *      )
+     *)
+     */
 class RoleController extends Controller
 {
 
@@ -97,7 +190,7 @@ class RoleController extends Controller
             'data' => $role,
             'status' => 'success',
             'message' => 'Role has been created successfully!'
-        ], 201);
+        ], 200);
     }
 
     /**

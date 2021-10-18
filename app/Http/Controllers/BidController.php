@@ -190,7 +190,7 @@ class BidController extends Controller
                 $submission->score = $data['score'];
                 $submission->correct = $data['correct'];
 
-                $bid->submissions()->save($submission);   
+                $bid->submissions()->save($submission);
             }
         }
 
