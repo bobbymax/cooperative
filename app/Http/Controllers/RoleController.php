@@ -11,10 +11,11 @@ use Illuminate\Support\Str;
 
 /**
      * @OA\Post(
-     ** path="/roles",
-     *   tags={"role"},
-     *   summary="manage user roles",
+     * path="/roles",
+     *   tags={"Roles"},
+     *   summary=" Save user role",
      *   operationId="roles",
+     *
      *
      *   @OA\Parameter(
      *      name="name",
@@ -58,7 +59,7 @@ use Illuminate\Support\Str;
      * ),
      * @OA\Parameter(
      *      name="permissions",
-     *      description="A checkbox of roles",
+     *      description="A checkbox of permissions",
      *      in="query",
      *      required=true,
      *      @OA\Schema(
@@ -100,8 +101,70 @@ use Illuminate\Support\Str;
      *          response=500,
      *          description="Error"
      *      )
-     *)
+     *
+     * )
+     * )
+    */
+      /**
+     * @OA\Get(
+     *     path="/roles",
+     *     tags={"Roles"},
+     *     description="Returns all roles on the system",
+     *     operationId="findRoles",
+     *     @OA\Parameter(
+     *         name="role",
+     *         in="query",
+     *         description="roles to get",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="array",
+     *             @OA\Items(type="string"),
+     *         ),
+     *         style="form"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="pet response",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="")
+     *         ),
+     *         @OA\XmlContent(
+     *             type="array",
+     *             @OA\Items(ref="")
+     *         ),
+     *         @OA\MediaType(
+     *             mediaType="text/xml",
+     *             @OA\Schema(
+     *                 type="array",
+     *                 @OA\Items(ref="")
+     *             ),
+     *         ),
+     *         @OA\MediaType(
+     *             mediaType="text/html",
+     *             @OA\Schema(
+     *                 type="array",
+     *                 @OA\Items(ref="")
+     *             ),
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="unexpected error",
+     *         @OA\JsonContent(ref=""),
+     *         @OA\XmlContent(ref=""),
+     *         @OA\MediaType(
+     *             mediaType="text/xml",
+     *             @OA\Schema(ref="")
+     *         ),
+     *         @OA\MediaType(
+     *             mediaType="text/html",
+     *             @OA\Schema(ref="")
+     *         )
+     *     )
+     * )
      */
+
 class RoleController extends Controller
 {
 
@@ -115,6 +178,8 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function index()
     {
         $roles = Role::latest()->get();
@@ -124,7 +189,7 @@ class RoleController extends Controller
                 'data' => [],
                 'status' => 'info',
                 'message' => 'No data found!'
-            ], 200);
+            ], 404);
         }
 
         return response()->json([

@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\Validator;
   /**
      * @OA\Post(
      ** path="/login",
-     *   tags={"Login"},
-     *   summary="Sign in as an exsisting user",
-     *   operationId="login",
+     *   tags={"Auth"},
+     *   summary="Sign in as an existing user",
+     *   operationId="authlogin",
+     *   security={ {"bearer": {} }},
      *
      *   @OA\Parameter(
      *      name="email",

@@ -8,10 +8,10 @@
         "/login": {
             "post": {
                 "tags": [
-                    "Login"
+                    "Auth"
                 ],
-                "summary": "Sign in as an exsisting user",
-                "operationId": "login",
+                "summary": "Sign in as an existing user",
+                "operationId": "authlogin",
                 "parameters": [
                     {
                         "name": "email",
@@ -49,15 +49,106 @@
                     "403": {
                         "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/roles": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "description": "Returns all roles on the system",
+                "operationId": "findRoles",
+                "parameters": [
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "description": "roles to get",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "pet response",
+                        "content": {
+                            "text/xml": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": ""
+                                    }
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": ""
+                                    }
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": ""
+                                    }
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": ""
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "unexpected error",
+                        "content": {
+                            "text/xml": {
+                                "schema": {
+                                    "$ref": ""
+                                }
+                            },
+                            "text/html": {
+                                "schema": {
+                                    "$ref": ""
+                                }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": ""
+                                }
+                            },
+                            "application/xml": {
+                                "schema": {
+                                    "$ref": ""
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
-                    "role"
+                    "Roles"
                 ],
-                "summary": "manage user roles",
+                "summary": " Save user role",
                 "operationId": "roles",
                 "parameters": [
                     {
@@ -103,7 +194,7 @@
                     {
                         "name": "permissions",
                         "in": "query",
-                        "description": "A checkbox of roles",
+                        "description": "A checkbox of permissions",
                         "required": true,
                         "schema": {
                             "type": "list"

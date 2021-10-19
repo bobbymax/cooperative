@@ -9,6 +9,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+
 // Login User In
 Route::post('login', 'LoginController@login');
 
