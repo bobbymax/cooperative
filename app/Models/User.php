@@ -69,8 +69,23 @@ class User extends Authenticatable
         return $this->groups()->save($group);
     }
 
+    public function account()
+    {
+        return $this->morphOne(Account::class, 'accountable');
+    }
+
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    public function batches()
+    {
+        return $this->hasMany(Batch::class);
+    }
+
+    public function journals()
+    {
+        return $this->hasMany(Journal::class);
     }
 }

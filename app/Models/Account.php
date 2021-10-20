@@ -5,14 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ServiceCategory extends Model
+class Account extends Model
 {
     use HasFactory;
 
     protected $guarded = [''];
 
-    public function projects()
+    public function accountable()
     {
-        return $this->hasMany(Project::class);
+        return $this->morphTo();
+    }
+
+    public function entries()
+    {
+        return $this->hasMany(Entry::class);
     }
 }

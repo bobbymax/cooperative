@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
+use App\Models\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
-class DepartmentController extends Controller
+class BatchController extends Controller
 {
     public function __construct()
     {
@@ -21,20 +20,20 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::latest()->get();
+        $batches = Batch::latest()->get();
 
-        if ($departments->count() < 1) {
+        if ($batches->count() < 1) {
             return response()->json([
                 'data' => [],
                 'status' => 'info',
-                'message' => 'No data found'
-            ], 200);
+                'message' => 'No data found!'
+            ], 404);
         }
 
         return response()->json([
-            'data' => $departments,
+            'data' => $batches,
             'status' => 'success',
-            'message' => 'Department List'
+            'message' => 'Account Codes List'
         ], 200);
     }
 
@@ -57,11 +56,10 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'code' => 'required|string|max:7|unique:departments',
-            'department_code' => 'required|string|unique:departments',
-            'type' => 'required|string|in:directorate,division,department,unit',
-            'parentId' => 'required'
+            'reference_no' => 'required|string',
+            'amount' => 'required|integer',
+            'sub_budget_head_id' => 'required|integer',
+            'department_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -69,72 +67,68 @@ class DepartmentController extends Controller
                 'data' => $validator->errors(),
                 'status' => 'error',
                 'message' => 'Please fix the following errors:'
-            ], 200);
+            ], 500);
         }
 
-        $department = Department::create([
-            'name' => $request->name,
-            'label' => Str::slug($request->name),
-            'code' => $request->code,
-            'department_code' => $request->department_code,
-            'type' => $request->type,
-            'parentId' => $request->parentId
+        $batch = Batch::create([
+            'sub_budget_head_id' => $request->sub_budget_head_id,
+            'department_id' => $request->department_id,
+            'user_id' => auth()->user()->id,
+            'reference_no' => $request->reference_no,
+            'amount' => $request->amount,
+            'no_of_payments' => $request->no_of_payments
         ]);
 
         return response()->json([
-            'data' => $department,
+            'data' => $batch,
             'status' => 'success',
-            'message' => 'Department created successfully!'
+            'message' => 'Batch has been created successfully!!'
         ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\Batch  $batch
      * @return \Illuminate\Http\Response
      */
-    public function show($department)
+    public function show($batch)
     {
-        $department = Department::find($department);
-
-        if (! $department) {
+        $batch = Batch::find($batch);
+        if (! $batch) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $department,
+            'data' => $batch,
             'status' => 'success',
-            'message' => 'Department details!'
+            'message' => 'Batch details'
         ], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\Batch  $batch
      * @return \Illuminate\Http\Response
      */
-    public function edit($department)
+    public function edit($batch)
     {
-        $department = Department::find($department);
-
-        if (! $department) {
+        $batch = Batch::find($batch);
+        if (! $batch) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $department,
+            'data' => $batch,
             'status' => 'success',
-            'message' => 'Department details!'
+            'message' => 'Batch details'
         ], 200);
     }
 
@@ -142,16 +136,16 @@ class DepartmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\Batch  $batch
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $department)
+    public function update(Request $request, $batch)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'department_code' => 'required|string',
-            'type' => 'required|string|in:directorate,division,department,unit',
-            'parentId' => 'required'
+            'sub_budget_head_id' => 'required|integer',
+            'department_id' => 'required|integer',
+            'reference_no' => 'required|string',
+            'amount' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -159,60 +153,57 @@ class DepartmentController extends Controller
                 'data' => $validator->errors(),
                 'status' => 'error',
                 'message' => 'Please fix the following errors:'
-            ], 200);
+            ], 500);
         }
 
-        $department = Department::find($department);
-
-        if (! $department) {
+        $batch = Batch::find($batch);
+        if (! $batch) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
 
-        $department->update([
-            'name' => $request->name,
-            'label' => Str::slug($request->name),
-            'code' => $request->code,
-            'department_code' => $request->department_code,
-            'type' => $request->type,
-            'parentId' => $request->parentId
+        $batch->update([
+            'sub_budget_head_id' => $request->sub_budget_head_id,
+            'department_id' => $request->department_id,
+            'reference_no' => $request->reference_no,
+            'amount' => $request->amount,
+            'no_of_payments' => $request->no_of_payments
         ]);
 
         return response()->json([
-            'data' => $department,
+            'data' => $batch,
             'status' => 'success',
-            'message' => 'Department updated successfully!'
+            'message' => 'Batch details updated successfully!'
         ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\Batch  $batch
      * @return \Illuminate\Http\Response
      */
-    public function destroy($department)
+    public function destroy($batch)
     {
-        $department = Department::find($department);
-
-        if (! $department) {
+        $batch = Batch::find($batch);
+        if (! $batch) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
 
-        $old = $department;
-        $department->delete();
+        $old = $batch;
+        $batch->delete();
 
         return response()->json([
             'data' => $old,
             'status' => 'success',
-            'message' => 'Department deleted successfully!'
+            'message' => 'Batch details updated successfully!'
         ], 200);
     }
 }

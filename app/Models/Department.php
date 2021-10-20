@@ -25,4 +25,9 @@ class Department extends Model
     {
         return $this->morphToMany(Module::class, 'moduleable');
     }
+
+    public function batches()
+    {
+        return $this->hasMany(Batch::class);
+    }
 }

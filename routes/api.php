@@ -30,6 +30,16 @@ Route::apiResource('tags', 'TagController');
 Route::apiResource('projects', 'ProjectCotroller');
 Route::apiResource('uploads', 'UploadController');
 Route::apiResource('companies', 'CompanyController');
+Route::apiResource('bids', 'BidController');
+Route::apiResource('expenditures', 'ExpenditureController');
+
+// Finance and Accounting Routes
+Route::apiResource('accountCharts', 'AccountChartController');
+Route::apiResource('accountCodes', 'AccountCodeController');
+Route::apiResource('accounts', 'AccountController');
+Route::apiResource('batches', 'BatchController');
+Route::apiResource('journals', 'JournalController');
+Route::apiResource('ledgers', 'LedgerController');
 
 // Budget Control Routes
 Route::apiResource('budgetHeads', 'BudgetHeadController');

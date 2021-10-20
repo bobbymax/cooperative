@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
+use App\Models\AccountChart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
-class DepartmentController extends Controller
+class AccountChartController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth:api');
@@ -21,20 +22,20 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::latest()->get();
+        $accountCharts = AccountChart::latest()->get();
 
-        if ($departments->count() < 1) {
+        if ($accountCharts->count() < 1) {
             return response()->json([
                 'data' => [],
                 'status' => 'info',
-                'message' => 'No data found'
-            ], 200);
+                'message' => 'No data found!'
+            ], 404);
         }
 
         return response()->json([
-            'data' => $departments,
+            'data' => $accountCharts,
             'status' => 'success',
-            'message' => 'Department List'
+            'message' => 'Tags List'
         ], 200);
     }
 
@@ -58,10 +59,8 @@ class DepartmentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'code' => 'required|string|max:7|unique:departments',
-            'department_code' => 'required|string|unique:departments',
-            'type' => 'required|string|in:directorate,division,department,unit',
-            'parentId' => 'required'
+            'min' => 'required|integer',
+            'max' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -69,72 +68,67 @@ class DepartmentController extends Controller
                 'data' => $validator->errors(),
                 'status' => 'error',
                 'message' => 'Please fix the following errors:'
-            ], 200);
+            ], 500);
         }
 
-        $department = Department::create([
+        $accountChart = AccountChart::create([
             'name' => $request->name,
             'label' => Str::slug($request->name),
-            'code' => $request->code,
-            'department_code' => $request->department_code,
-            'type' => $request->type,
-            'parentId' => $request->parentId
+            'min' => $request->min,
+            'max' => $request->max,
+            'active' => true
         ]);
 
         return response()->json([
-            'data' => $department,
+            'data' => $accountChart,
             'status' => 'success',
-            'message' => 'Department created successfully!'
+            'message' => 'Account Chart has been created successfully!!'
         ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\AccountChart  $accountChart
      * @return \Illuminate\Http\Response
      */
-    public function show($department)
+    public function show($accountChart)
     {
-        $department = Department::find($department);
-
-        if (! $department) {
+        $accountChart = AccountChart::find($accountChart);
+        if (! $accountChart) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $department,
+            'data' => $accountChart,
             'status' => 'success',
-            'message' => 'Department details!'
+            'message' => 'Account Chart details'
         ], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\AccountChart  $accountChart
      * @return \Illuminate\Http\Response
      */
-    public function edit($department)
+    public function edit($accountChart)
     {
-        $department = Department::find($department);
-
-        if (! $department) {
+        $accountChart = AccountChart::find($accountChart);
+        if (! $accountChart) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $department,
+            'data' => $accountChart,
             'status' => 'success',
-            'message' => 'Department details!'
+            'message' => 'Account Chart details'
         ], 200);
     }
 
@@ -142,16 +136,15 @@ class DepartmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\AccountChart  $accountChart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $department)
+    public function update(Request $request, $accountChart)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'department_code' => 'required|string',
-            'type' => 'required|string|in:directorate,division,department,unit',
-            'parentId' => 'required'
+            'min' => 'required|integer',
+            'max' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -159,60 +152,57 @@ class DepartmentController extends Controller
                 'data' => $validator->errors(),
                 'status' => 'error',
                 'message' => 'Please fix the following errors:'
-            ], 200);
+            ], 500);
         }
 
-        $department = Department::find($department);
-
-        if (! $department) {
+        $accountChart = AccountChart::find($accountChart);
+        if (! $accountChart) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
 
-        $department->update([
+        $accountChart->update([
             'name' => $request->name,
             'label' => Str::slug($request->name),
-            'code' => $request->code,
-            'department_code' => $request->department_code,
-            'type' => $request->type,
-            'parentId' => $request->parentId
+            'min' => $request->min,
+            'max' => $request->max,
+            'active' => $request->active
         ]);
 
         return response()->json([
-            'data' => $department,
+            'data' => $accountChart,
             'status' => 'success',
-            'message' => 'Department updated successfully!'
+            'message' => 'Account Chart details'
         ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\AccountChart  $accountChart
      * @return \Illuminate\Http\Response
      */
-    public function destroy($department)
+    public function destroy($accountChart)
     {
-        $department = Department::find($department);
-
-        if (! $department) {
+        $accountChart = AccountChart::find($accountChart);
+        if (! $accountChart) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
 
-        $old = $department;
-        $department->delete();
+        $old = $accountChart;
+        $accountChart->delete();
 
         return response()->json([
             'data' => $old,
             'status' => 'success',
-            'message' => 'Department deleted successfully!'
+            'message' => 'Account Chart details'
         ], 200);
     }
 }

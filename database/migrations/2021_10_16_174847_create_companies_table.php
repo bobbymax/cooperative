@@ -25,6 +25,7 @@ class CreateCompaniesTable extends Migration
             $table->text('address')->nullable();
             $table->string('profile')->nullable();
             $table->enum('status', ['registered', 'approved', 'denied'])->default('registered');
+            $table->enum('type', ['vendor', 'owner'])->default('vendor');
             $table->boolean('blacklisted')->default(false);
             $table->timestamps();
         });

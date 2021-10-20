@@ -153,6 +153,7 @@ class BidController extends Controller
             'technical_document' => 'required|string',
             'financial_document' => 'required|string',
             'submissions' => 'required|array',
+            'status' => 'required|string|in:registered,draft,invitation,tenders,closed'
         ]);
 
         if ($validator->fails()) {
@@ -178,6 +179,7 @@ class BidController extends Controller
             'proposal' => $request->proposal,
             'technical_document' => $request->technical_document,
             'financial_document' => $request->financial_document,
+            'status' => $request->status
         ]);
 
         if ($bid && $request->submissions) {

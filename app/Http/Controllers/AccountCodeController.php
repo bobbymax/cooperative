@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
+use App\Models\AccountCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
-class DepartmentController extends Controller
+
+class AccountCodeController extends Controller
 {
     public function __construct()
     {
@@ -21,20 +22,20 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::latest()->get();
+        $accountCodes = AccountCode::latest()->get();
 
-        if ($departments->count() < 1) {
+        if ($accountCodes->count() < 1) {
             return response()->json([
                 'data' => [],
                 'status' => 'info',
-                'message' => 'No data found'
-            ], 200);
+                'message' => 'No data found!'
+            ], 404);
         }
 
         return response()->json([
-            'data' => $departments,
+            'data' => $accountCodes,
             'status' => 'success',
-            'message' => 'Department List'
+            'message' => 'Account Codes List'
         ], 200);
     }
 
@@ -57,11 +58,9 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'account_chart_id' => 'required|integer',
             'name' => 'required|string|max:255',
-            'code' => 'required|string|max:7|unique:departments',
-            'department_code' => 'required|string|unique:departments',
-            'type' => 'required|string|in:directorate,division,department,unit',
-            'parentId' => 'required'
+            'code' => 'required|integer|unique:account_codes'
         ]);
 
         if ($validator->fails()) {
@@ -69,72 +68,66 @@ class DepartmentController extends Controller
                 'data' => $validator->errors(),
                 'status' => 'error',
                 'message' => 'Please fix the following errors:'
-            ], 200);
+            ], 500);
         }
 
-        $department = Department::create([
+        $accountCode = AccountCode::create([
+            'account_chart_id' => $request->account_chart_id,
             'name' => $request->name,
             'label' => Str::slug($request->name),
-            'code' => $request->code,
-            'department_code' => $request->department_code,
-            'type' => $request->type,
-            'parentId' => $request->parentId
+            'code' => $request->code
         ]);
 
         return response()->json([
-            'data' => $department,
+            'data' => $accountCode,
             'status' => 'success',
-            'message' => 'Department created successfully!'
+            'message' => 'Account Code has been created successfully!!'
         ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\AccountCode  $accountCode
      * @return \Illuminate\Http\Response
      */
-    public function show($department)
+    public function show($accountCode)
     {
-        $department = Department::find($department);
-
-        if (! $department) {
+        $accountCode = AccountCode::find($accountCode);
+        if (! $accountCode) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $department,
+            'data' => $accountCode,
             'status' => 'success',
-            'message' => 'Department details!'
+            'message' => 'Account Code details'
         ], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\AccountCode  $accountCode
      * @return \Illuminate\Http\Response
      */
-    public function edit($department)
+    public function edit($accountCode)
     {
-        $department = Department::find($department);
-
-        if (! $department) {
+        $accountCode = AccountCode::find($accountCode);
+        if (! $accountCode) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $department,
+            'data' => $accountCode,
             'status' => 'success',
-            'message' => 'Department details!'
+            'message' => 'Account Code details'
         ], 200);
     }
 
@@ -142,16 +135,15 @@ class DepartmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\AccountCode  $accountCode
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $department)
+    public function update(Request $request, $accountCode)
     {
         $validator = Validator::make($request->all(), [
+            'account_chart_id' => 'required|integer',
             'name' => 'required|string|max:255',
-            'department_code' => 'required|string',
-            'type' => 'required|string|in:directorate,division,department,unit',
-            'parentId' => 'required'
+            'code' => 'required|integer|unique:account_codes'
         ]);
 
         if ($validator->fails()) {
@@ -159,60 +151,56 @@ class DepartmentController extends Controller
                 'data' => $validator->errors(),
                 'status' => 'error',
                 'message' => 'Please fix the following errors:'
-            ], 200);
+            ], 500);
         }
 
-        $department = Department::find($department);
-
-        if (! $department) {
+        $accountCode = AccountCode::find($accountCode);
+        if (! $accountCode) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
 
-        $department->update([
+        $accountCode->update([
+            'account_chart_id' => $request->account_chart_id,
             'name' => $request->name,
             'label' => Str::slug($request->name),
-            'code' => $request->code,
-            'department_code' => $request->department_code,
-            'type' => $request->type,
-            'parentId' => $request->parentId
+            'code' => $request->code
         ]);
 
         return response()->json([
-            'data' => $department,
+            'data' => $accountCode,
             'status' => 'success',
-            'message' => 'Department updated successfully!'
+            'message' => 'Account Code has been updated successfully!!'
         ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\AccountCode  $accountCode
      * @return \Illuminate\Http\Response
      */
-    public function destroy($department)
+    public function destroy($accountCode)
     {
-        $department = Department::find($department);
-
-        if (! $department) {
+        $accountCode = AccountCode::find($accountCode);
+        if (! $accountCode) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
 
-        $old = $department;
-        $department->delete();
+        $old = $accountCode;
+        $accountCode->delete();
 
         return response()->json([
             'data' => $old,
             'status' => 'success',
-            'message' => 'Department deleted successfully!'
+            'message' => 'Account Code details deleted successfully!!'
         ], 200);
     }
 }

@@ -25,4 +25,19 @@ class Project extends Model
     {
         return $this->hasMany(Bid::class);
     }
+
+    public function category()
+    {
+        return $this->belongsTo(ServiceCategory::class, 'service_category_id');
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'tagable');
+    }
+
+    public function expenditures()
+    {
+        return $this->morphMany(Expenditure::class, 'expenditureable');
+    }
 }

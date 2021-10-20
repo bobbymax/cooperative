@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ServiceCategory extends Model
+class AccountCode extends Model
 {
     use HasFactory;
 
     protected $guarded = [''];
 
-    public function projects()
+    public function journals()
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Journal::class);
     }
 }

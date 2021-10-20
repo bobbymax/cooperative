@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
+use App\Models\Ledger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
-class DepartmentController extends Controller
+class LedgerController extends Controller
 {
+
+    /**
+     * Class Constructor
+     */
     public function __construct()
     {
         $this->middleware('auth:api');
     }
+
 
     /**
      * Display a listing of the resource.
@@ -21,20 +25,20 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::latest()->get();
+        $ledgers = Ledger::latest()->get();
 
-        if ($departments->count() < 1) {
+        if ($ledgers->count() < 1) {
             return response()->json([
                 'data' => [],
                 'status' => 'info',
-                'message' => 'No data found'
-            ], 200);
+                'message' => 'No data found!'
+            ], 404);
         }
 
         return response()->json([
-            'data' => $departments,
+            'data' => $ledgers,
             'status' => 'success',
-            'message' => 'Department List'
+            'message' => 'Ledgers List'
         ], 200);
     }
 
@@ -57,11 +61,10 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'code' => 'required|string|max:7|unique:departments',
-            'department_code' => 'required|string|unique:departments',
-            'type' => 'required|string|in:directorate,division,department,unit',
-            'parentId' => 'required'
+            'journal_id' => 'required|integer',
+            'pv_no' => 'required|string|unique:ledgers',
+            'mode_of_payment' => 'required|string|in:cheque,by-cash,bank-transfer',
+            'type' => 'required|string|in:c,d,a'
         ]);
 
         if ($validator->fails()) {
@@ -69,72 +72,66 @@ class DepartmentController extends Controller
                 'data' => $validator->errors(),
                 'status' => 'error',
                 'message' => 'Please fix the following errors:'
-            ], 200);
+            ], 500);
         }
 
-        $department = Department::create([
-            'name' => $request->name,
-            'label' => Str::slug($request->name),
-            'code' => $request->code,
-            'department_code' => $request->department_code,
+        $ledger = Ledger::create([
+            'journal_id' => $request->journal_id,
+            'pv_no' => $request->pv_no,
+            'mode_of_payment' => $request->mode_of_payment,
             'type' => $request->type,
-            'parentId' => $request->parentId
         ]);
 
         return response()->json([
-            'data' => $department,
+            'data' => $ledger,
             'status' => 'success',
-            'message' => 'Department created successfully!'
+            'message' => 'Ledger has been created successfully!!'
         ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\Ledger  $ledger
      * @return \Illuminate\Http\Response
      */
-    public function show($department)
+    public function show($ledger)
     {
-        $department = Department::find($department);
-
-        if (! $department) {
+        $ledger = Ledger::find($ledger);
+        if (! $ledger) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $department,
+            'data' => $ledger,
             'status' => 'success',
-            'message' => 'Department details!'
+            'message' => 'Ledger details'
         ], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\Ledger  $ledger
      * @return \Illuminate\Http\Response
      */
-    public function edit($department)
+    public function edit($ledger)
     {
-        $department = Department::find($department);
-
-        if (! $department) {
+        $ledger = Ledger::find($ledger);
+        if (! $ledger) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $department,
+            'data' => $ledger,
             'status' => 'success',
-            'message' => 'Department details!'
+            'message' => 'Ledger details'
         ], 200);
     }
 
@@ -142,16 +139,17 @@ class DepartmentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\Ledger  $ledger
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $department)
+    public function update(Request $request, $ledger)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'department_code' => 'required|string',
-            'type' => 'required|string|in:directorate,division,department,unit',
-            'parentId' => 'required'
+            'journal_id' => 'required|integer',
+            'pv_no' => 'required|string',
+            'mode_of_payment' => 'required|string|in:cheque,by-cash,bank-transfer',
+            'type' => 'required|string|in:c,d,a',
+            'status' => 'required|string|in:generated,in-process,posted,paid'
         ]);
 
         if ($validator->fails()) {
@@ -159,60 +157,58 @@ class DepartmentController extends Controller
                 'data' => $validator->errors(),
                 'status' => 'error',
                 'message' => 'Please fix the following errors:'
-            ], 200);
+            ], 500);
         }
 
-        $department = Department::find($department);
-
-        if (! $department) {
+        $ledger = Ledger::find($ledger);
+        if (! $ledger) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
 
-        $department->update([
-            'name' => $request->name,
-            'label' => Str::slug($request->name),
-            'code' => $request->code,
-            'department_code' => $request->department_code,
+        $ledger = Ledger::create([
+            'journal_id' => $request->journal_id,
+            'pv_no' => $request->pv_no,
+            'mode_of_payment' => $request->mode_of_payment,
             'type' => $request->type,
-            'parentId' => $request->parentId
+            'status' => $request->status,
+            'closed' => isset($request->closed) ? $request->closed : false
         ]);
 
         return response()->json([
-            'data' => $department,
+            'data' => $ledger,
             'status' => 'success',
-            'message' => 'Department updated successfully!'
+            'message' => 'Ledger has been updated successfully!!'
         ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Department  $department
+     * @param  \App\Models\Ledger  $ledger
      * @return \Illuminate\Http\Response
      */
-    public function destroy($department)
+    public function destroy($ledger)
     {
-        $department = Department::find($department);
-
-        if (! $department) {
+        $ledger = Ledger::find($ledger);
+        if (! $ledger) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid department ID'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
 
-        $old = $department;
-        $department->delete();
+        $old = $ledger;
+        $ledger->delete();
 
         return response()->json([
             'data' => $old,
             'status' => 'success',
-            'message' => 'Department deleted successfully!'
+            'message' => 'Account details'
         ], 200);
     }
 }

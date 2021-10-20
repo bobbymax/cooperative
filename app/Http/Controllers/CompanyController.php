@@ -70,7 +70,8 @@ class CompanyController extends Controller
             'contact_mobile' => 'required|string|unique:users',
             'firstname' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
-            'profile' => 'required|string'
+            'profile' => 'required|string',
+            'type' => 'required|string|in:vendor,owner'
         ]);
 
         if ($validator->fails()) {
@@ -88,7 +89,8 @@ class CompanyController extends Controller
             'email' => $request->email,
             'mobile' => $request->mobile,
             'address' => $request->address,
-            'profile' => $request->profile
+            'profile' => $request->profile,
+            'type' => $request->type
         ]);
 
         if ($company) {
@@ -173,7 +175,8 @@ class CompanyController extends Controller
             'service_category_id' => 'required|integer',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            'mobile' => 'required|string'
+            'mobile' => 'required|string',
+            'type' => 'required|string|in:vendor,owner'
         ]);
 
         if ($validator->fails()) {
@@ -201,7 +204,8 @@ class CompanyController extends Controller
             'email' => $request->email,
             'mobile' => $request->mobile,
             'address' => $request->address,
-            'profile' => $request->profile
+            'profile' => $request->profile,
+            'type' => $request->type
         ]);
 
         return response()->json([

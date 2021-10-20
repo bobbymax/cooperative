@@ -10,4 +10,9 @@ class Tag extends Model
     use HasFactory;
 
     protected $guarded = [''];
+
+    public function projects()
+    {
+        return $this->morphedByMany(Project::class, 'tagable');
+    }
 }
