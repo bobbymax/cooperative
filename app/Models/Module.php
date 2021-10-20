@@ -12,17 +12,18 @@ use Illuminate\Support\Str;
  * @OA\Schema(
  * @OA\Xml(name="Module"),
  * @OA\Property(property="id", type="integer", example="05"),
- * @OA\Property(property="name", type="string", example="Company Name"),
- * @OA\Property(property="label", type="string", example="Company Label"),
- * @OA\Property(property="reference_no", type="string", example="38929838AF"),
- * @OA\Property(property="email", type="string", example= "user@email.com") ,
- * @OA\Property(property="mobile", type="string", example="+23481278279"),
- * @OA\Property(property="address", type="string", example="Company Address"),
- * @OA\Property(property="profile", type="string", example="link to document"),
- * @OA\Property(property="status", type="string", enum={"registered","approved","denied"} , example="Approved"),
- *  @OA\Property(property="blacklisted", type="boolean", example="False"),
- *  @OA\Property(property="created_at", type="date", example="2020-10-20"),
- *  @OA\Property(property="updated_at", type="date", example="2020-12-22"),
+ * @OA\Property(property="name", type="string", example="Procurement Management Module"),
+ * @OA\Property(property="label", type="string", example="Procurement Management"),
+ * @OA\Property(property="code", type="string", example="PMM"),
+ * @OA\Property(property="path", type="string", example="moduule path"),
+ * @OA\Property(property="icon", type="string", example= "Icon path") ,
+ * @OA\Property(property="parentId", type="integer", example="05"),
+ * @OA\Property(property="quickAccess", type="boolean", example="False"),
+ * @OA\Property(property="type", type="string", enum={"application","module","page"} , example="Approved"),
+ * @OA\Property(property="generatePermissions", type="boolean", example="False"),
+ * @OA\Property(property="created_at", type="date", example="2020-10-20"),
+ * @OA\Property(property="updated_at", type="date", example="2020-12-22"),
+ * @OA\Property(property="deleted_at", type="date", example="2020-12-22")
  * )
  * Class Module
  *

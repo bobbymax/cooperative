@@ -9,14 +9,18 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @OA\Schema(
  * @OA\Xml(name="Permission"),
- * @OA\Property(property="id", type="integer", readOnly="true", example="1"),
- * @OA\Property(property="key", type="string", readOnly="true", description="User role", example= "2") ,
- * @OA\Property(property="module", ref="#/components/schemas/Module",description="List of Modules"),
- * @OA\Property(property="name", type="string", maxLength=32, example="Read"),
+ * @OA\Property(property="id", type="integer", example="25"),
+ * @OA\Property(property="key", type="string", example="Create Budget"),
+ * @OA\Property(property="name", type="string", example="Create Budget"),
+ * @OA\Property(property="module", ref="#/components/schemas/Module",description="module"),
+ * @OA\Property(property="created_at", type="date", example="2020-10-20"),
+ * @OA\Property(property="updated_at", type="date", example="2020-12-22"),
+
  * )
  * Class Permission
  *
  */
+
 class Permission extends Model
 {
     use HasFactory;

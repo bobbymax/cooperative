@@ -569,22 +569,60 @@
                 "properties": {
                     "id": {
                         "type": "integer",
-                        "readOnly": "true",
-                        "example": "1"
-                    },
-                    "key": {
-                        "description": "User role",
-                        "type": "string",
-                        "readOnly": "true",
-                        "example": "2"
-                    },
-                    "module": {
-                        "$ref": "#/components/schemas/Module"
+                        "example": "05"
                     },
                     "name": {
                         "type": "string",
-                        "maxLength": 32,
-                        "example": "Read"
+                        "example": "Procurement Management Module"
+                    },
+                    "label": {
+                        "type": "string",
+                        "example": "Procurement Management"
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "PMM"
+                    },
+                    "path": {
+                        "type": "string",
+                        "example": "moduule path"
+                    },
+                    "icon": {
+                        "type": "string",
+                        "example": "Icon path"
+                    },
+                    "parentId": {
+                        "type": "integer",
+                        "example": "05"
+                    },
+                    "quickAccess": {
+                        "type": "boolean",
+                        "example": "False"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "application",
+                            "module",
+                            "page"
+                        ],
+                        "example": "Approved"
+                    },
+                    "generatePermissions": {
+                        "type": "boolean",
+                        "example": "False"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    },
+                    "deleted_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
                     }
                 },
                 "type": "object",
@@ -596,27 +634,164 @@
                 "properties": {
                     "id": {
                         "type": "integer",
-                        "readOnly": "true",
-                        "example": "1"
+                        "example": "25"
                     },
                     "key": {
-                        "description": "User role",
                         "type": "string",
-                        "readOnly": "true",
-                        "example": "2"
+                        "example": "Create Budget"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Create Budget"
                     },
                     "module": {
                         "$ref": "#/components/schemas/Module"
                     },
-                    "name": {
-                        "type": "string",
-                        "maxLength": 32,
-                        "example": "Read"
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
                     }
                 },
                 "type": "object",
                 "xml": {
                     "name": "Permission"
+                }
+            },
+            "Process": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "05"
+                    },
+                    "work_flow_id": {
+                        "type": "integer",
+                        "example": "02"
+                    },
+                    "group_id": {
+                        "type": "integer",
+                        "example": "05"
+                    },
+                    "order": {
+                        "type": "integer",
+                        "example": "05"
+                    },
+                    "remark": {
+                        "type": "string",
+                        "example": "Excellent"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "pending"
+                    },
+                    "closed": {
+                        "type": "boolean",
+                        "example": "False"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Process"
+                }
+            },
+            "Project": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "75"
+                    },
+                    "sub_budget_id": {
+                        "type": "integer",
+                        "example": "15"
+                    },
+                    "service_category_id": {
+                        "type": "integer",
+                        "example": "25"
+                    },
+                    "department_id": {
+                        "type": "integer",
+                        "example": "505"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Dam Project at Minna"
+                    },
+                    "label": {
+                        "type": "string",
+                        "example": "Dam Project"
+                    },
+                    "reference_no": {
+                        "type": "string",
+                        "example": "RF108AC"
+                    },
+                    "duration": {
+                        "type": "integer",
+                        "example": "4"
+                    },
+                    "measurein": {
+                        "type": "string",
+                        "enum": [
+                            "days",
+                            "weeks",
+                            "months",
+                            "years"
+                        ],
+                        "example": "years"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Dam Project"
+                    },
+                    "location": {
+                        "type": "string",
+                        "example": "Abuja"
+                    },
+                    "coordinates": {
+                        "type": "string",
+                        "example": "20.232304 , 32.323428"
+                    },
+                    "proposed_amount": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "50003490.45"
+                    },
+                    "evaluated_amount": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "50003490.45"
+                    },
+                    "approved_amount": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "50003490.45"
+                    },
+                    "awarded": {
+                        "type": "boolean",
+                        "example": "False"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Project"
                 }
             },
             "Role": {
@@ -644,9 +819,13 @@
                         "type": "date",
                         "example": "2020-12-20"
                     },
-                    "expire_date": {
+                    "expiry_date": {
                         "type": "date",
                         "example": "2020-12-20"
+                    },
+                    "cannot_expire": {
+                        "type": "boolean",
+                        "example": "True"
                     },
                     "isSuper": {
                         "type": "boolean",
@@ -670,50 +849,514 @@
                     "name": "Role"
                 }
             },
-            "User": {
-                "required": [
-                    "password"
-                ],
+            "ServiceCategory": {
                 "properties": {
-                    "company_id": {
+                    "id": {
                         "type": "integer",
                         "readOnly": "true",
                         "example": "1"
                     },
                     "name": {
-                        "description": "User role",
                         "type": "string",
-                        "readOnly": "true",
-                        "example": "John Doe"
+                        "example": "ICT"
                     },
-                    "email": {
-                        "description": "User unique email address",
+                    "label": {
                         "type": "string",
-                        "format": "email",
-                        "readOnly": "true",
-                        "example": "user@gmail.com"
+                        "example": "ICT"
                     },
-                    "email_verified_at": {
-                        "description": "Datetime marker of verification status",
+                    "description": {
                         "type": "string",
-                        "format": "date-time",
-                        "readOnly": "true",
-                        "example": "2019-02-25 12:59:20"
+                        "example": "ICT Services"
                     },
-                    "grade_level_id": {
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ServiceCategory"
+                }
+            },
+            "Setting": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "key": {
                         "type": "string",
-                        "maxLength": 32,
-                        "example": "32"
+                        "example": "Mobilisation Percentage"
+                    },
+                    "display_name": {
+                        "type": "string",
+                        "example": "Mobilisation Percentage"
+                    },
+                    "value": {
+                        "type": "string",
+                        "example": "30"
+                    },
+                    "details": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "input_type": {
+                        "type": "string",
+                        "example": "text"
+                    },
+                    "order": {
+                        "type": "int",
+                        "example": "2"
                     },
                     "group": {
                         "type": "string",
-                        "maxLength": 32,
-                        "example": "Directors"
+                        "example": "Global Settings"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Setting"
+                }
+            },
+            "SubBudgetHead": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "05"
+                    },
+                    "budget_head_id": {
+                        "type": "integer",
+                        "example": "15"
+                    },
+                    "department_id": {
+                        "type": "integer",
+                        "example": "01"
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "BSG/34/21"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Maintenance Budget"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Budget Description"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "capital",
+                            "overhead",
+                            "personnel"
+                        ],
+                        "example": "personell"
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "example": "True"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "SubBudgetHead"
+                }
+            },
+            "Submission": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "05"
+                    },
+                    "bid_id": {
+                        "type": "integer",
+                        "example": "15"
+                    },
+                    "survey_id": {
+                        "type": "integer",
+                        "example": "01"
+                    },
+                    "answer": {
+                        "type": "string",
+                        "example": "Yes"
+                    },
+                    "sccore": {
+                        "type": "integer",
+                        "example": "5"
+                    },
+                    "favorite": {
+                        "type": "boolean",
+                        "example": "True"
+                    },
+                    "correct": {
+                        "type": "boolean",
+                        "example": "True"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "submissions"
+                }
+            },
+            "Survey": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "75"
+                    },
+                    "question": {
+                        "type": "string",
+                        "example": "In what year was your company founded?"
+                    },
+                    "category": {
+                        "type": "string",
+                        "enum": [
+                            "multiple-choice",
+                            "objectives",
+                            "text",
+                            "range-choice"
+                        ],
+                        "example": "multiple-choice"
+                    },
+                    "max_range_number": {
+                        "type": "integer",
+                        "example": "0"
+                    },
+                    "score": {
+                        "type": "integer",
+                        "example": "100"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "general",
+                            "technical",
+                            "financial",
+                            "survey",
+                            "feedback"
+                        ],
+                        "example": "feedback"
+                    },
+                    "surveyable_id": {
+                        "type": "integer",
+                        "example": "75"
+                    },
+                    "surveyable_type": {
+                        "type": "string",
+                        "example": "surveyable type"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Survey"
+                }
+            },
+            "Tag": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "construction"
+                    },
+                    "label": {
+                        "type": "string",
+                        "example": "construction"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Tag"
+                }
+            },
+            "Upload": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "75"
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "example": "75"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Company Profile"
+                    },
+                    "path": {
+                        "type": "string",
+                        "example": "Storage path"
+                    },
+                    "ext": {
+                        "type": "string",
+                        "example": "File Extension"
+                    },
+                    "size": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "25.5"
+                    },
+                    "uploadable_id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "uploadable_type": {
+                        "type": "string",
+                        "example": "Uploadable type"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    },
+                    "deleted_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Upload"
+                }
+            },
+            "User": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "75"
+                    },
+                    "staff_no": {
+                        "type": "string",
+                        "example": "15AA"
+                    },
+                    "grade_level_id": {
+                        "type": "integer",
+                        "example": "25"
+                    },
+                    "department_id": {
+                        "type": "integer",
+                        "example": "505"
+                    },
+                    "company_id": {
+                        "type": "integer",
+                        "example": "505"
+                    },
+                    "firstname": {
+                        "type": "string",
+                        "example": "John"
+                    },
+                    "middlename": {
+                        "type": "string",
+                        "example": "Okolo"
+                    },
+                    "surname": {
+                        "type": "string",
+                        "example": "Doe"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "jdoe@email.com"
+                    },
+                    "mobile": {
+                        "type": "string",
+                        "example": "+2348127820880"
+                    },
+                    "designation": {
+                        "type": "string",
+                        "example": "Cleaner"
+                    },
+                    "location": {
+                        "type": "string",
+                        "example": "Abuja"
+                    },
+                    "duration": {
+                        "type": "integer",
+                        "example": "4"
+                    },
+                    "email_verified_at": {
+                        "type": "date-time",
+                        "example": "2020-10-20"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "8979874hnwe__"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "permanent",
+                            "contract",
+                            "secondment",
+                            "vendor"
+                        ],
+                        "example": "vendor"
+                    },
+                    "date_of_birth": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "date_joined": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    },
+                    "address": {
+                        "type": "string",
+                        "example": "Sambisa Forest"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "in-service",
+                            "retired",
+                            "removed",
+                            "transfer-of-service"
+                        ],
+                        "example": "in-service"
+                    },
+                    "remember_token": {
+                        "type": "string",
+                        "example": "YSysysYGSoioeOISHe"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
                     }
                 },
                 "type": "object",
                 "xml": {
                     "name": "User"
+                }
+            },
+            "Variation": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "survey_id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "possible_answer": {
+                        "type": "string",
+                        "example": "True"
+                    },
+                    "score": {
+                        "type": "integer",
+                        "example": "20"
+                    },
+                    "correct": {
+                        "type": "boolean",
+                        "example": "true"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Variation"
+                }
+            },
+            "WorkFlow": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "module_id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Leave Application"
+                    },
+                    "label": {
+                        "type": "string",
+                        "example": "Leave Application"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "sequence",
+                            "broadcast"
+                        ],
+                        "example": "sequence"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "work_flows"
                 }
             }
         }
