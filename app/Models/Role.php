@@ -10,11 +10,16 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @OA\Schema(
  * @OA\Xml(name="Role"),
- * @OA\Property(property="role_id", type="integer", readOnly="true", example="1"),
- * @OA\Property(property="role", type="string", readOnly="true", description="User role", example= "ICT Admin") ,
- * @OA\Property(property="grade_level_id", type="string", maxLength=32, example="32"),
- * @OA\Property(property="group", type="string", maxLength=32, example="Directors")
- *
+ * @OA\Property(property="id", type="integer", readOnly="true", example="1"),
+ * @OA\Property(property="label", type="string", example="Managing Director"),
+ * @OA\Property(property="name", type="string", readOnly="true", description="User role", example= "ICT Admin") ,
+ * @OA\Property(property="max_slots", type="integer", example="23"),
+ * @OA\Property(property="start_date", type="date", example="2020-12-20"),
+ * @OA\Property(property="expire_date", type="date", example="2020-12-20"),
+ * @OA\Property(property="isSuper", type="boolean", example="True"),
+ *  @OA\Property(property="deactivated", type="boolean", example="False"),
+ *  @OA\Property(property="created_at", type="date", example="2020-10-20"),
+ *  @OA\Property(property="updated_at", type="date", example="2020-12-22"),
  * )
  * Class Role
  *

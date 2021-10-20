@@ -206,28 +206,463 @@
     },
     "components": {
         "schemas": {
-            "Role": {
+            "Bid": {
                 "properties": {
-                    "role_id": {
+                    "project_id": {
+                        "type": "integer",
+                        "example": "05"
+                    },
+                    "company_id": {
+                        "type": "integer",
+                        "example": "505"
+                    },
+                    "amount": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "50003490.45"
+                    },
+                    "proposal": {
+                        "type": "string",
+                        "example": "Link to document"
+                    },
+                    "invite": {
+                        "type": "string",
+                        "example": "link to document"
+                    },
+                    "technical_document": {
+                        "type": "string",
+                        "example": "link to document"
+                    },
+                    "financial_document": {
+                        "type": "string",
+                        "example": "link to document"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Water dam project at minna"
+                    },
+                    "score": {
+                        "type": "integer",
+                        "example": "100"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "registered",
+                            "draft",
+                            "invitation",
+                            "tenders",
+                            "closed"
+                        ],
+                        "example": "Tenders"
+                    },
+                    "awarded": {
+                        "type": "boolean",
+                        "example": "False"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Bid"
+                }
+            },
+            "BudgetHead": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "05"
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "BSG/34/21"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "ICT Budget"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Budget Description"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "BudgetHead"
+                }
+            },
+            "Company": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "05"
+                    },
+                    "service_category_id": {
+                        "type": "integer",
+                        "example": "05"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Company Name"
+                    },
+                    "label": {
+                        "type": "string",
+                        "example": "Company Label"
+                    },
+                    "reference_no": {
+                        "type": "string",
+                        "example": "38929838AF"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "user@email.com"
+                    },
+                    "mobile": {
+                        "type": "string",
+                        "example": "+23481278279"
+                    },
+                    "address": {
+                        "type": "string",
+                        "example": "Company Address"
+                    },
+                    "profile": {
+                        "type": "string",
+                        "example": "link to document"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "registered",
+                            "approved",
+                            "denied"
+                        ],
+                        "example": "Approved"
+                    },
+                    "blacklisted": {
+                        "type": "boolean",
+                        "example": "False"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Company"
+                }
+            },
+            "Department": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "05"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Human Resources Department"
+                    },
+                    "label": {
+                        "type": "string",
+                        "example": "Human Resources"
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "HRM"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "directorate",
+                            "division",
+                            "department",
+                            "unit"
+                        ],
+                        "example": "Department"
+                    },
+                    "parentId": {
+                        "type": "integer",
+                        "example": "66"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Department"
+                }
+            },
+            "Fund": {
+                "properties": {
+                    "id": {
                         "type": "integer",
                         "readOnly": "true",
                         "example": "1"
                     },
-                    "role": {
+                    "sub_budget_head_id": {
+                        "type": "integer",
+                        "example": "14"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Fund Description"
+                    },
+                    "approved_amount": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "50003490.45"
+                    },
+                    "booked_expenditure": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "50003490.45"
+                    },
+                    "actual_expenditure": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "50003490.45"
+                    },
+                    "booked_balance": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "50003490.45"
+                    },
+                    "actual_balance": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "50003490.45"
+                    },
+                    "expected_performance": {
+                        "type": "integer",
+                        "example": "90"
+                    },
+                    "actual_performance": {
+                        "type": "integer",
+                        "example": "80"
+                    },
+                    "budget_year": {
+                        "type": "integer",
+                        "example": "2021"
+                    },
+                    "funded": {
+                        "type": "boolean",
+                        "example": "True"
+                    },
+                    "exhausted": {
+                        "type": "boolean",
+                        "example": "True"
+                    },
+                    "deactivated": {
+                        "type": "boolean",
+                        "example": "False"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Fund"
+                }
+            },
+            "GradeLevel": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "key": {
+                        "type": "string",
+                        "example": "ss5"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Senior Staff"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "GradeLevel"
+                }
+            },
+            "Group": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Directors"
+                    },
+                    "label": {
+                        "type": "string",
+                        "example": "Directors"
+                    },
+                    "expiry_date": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "cannot_expire": {
+                        "type": "boolean",
+                        "example": "True"
+                    },
+                    "deactivated": {
+                        "type": "boolean",
+                        "example": "True"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Group"
+                }
+            },
+            "Module": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "key": {
+                        "description": "User role",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2"
+                    },
+                    "module": {
+                        "$ref": "#/components/schemas/Module"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 32,
+                        "example": "Read"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Module"
+                }
+            },
+            "Permission": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "key": {
+                        "description": "User role",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "2"
+                    },
+                    "module": {
+                        "$ref": "#/components/schemas/Module"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 32,
+                        "example": "Read"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Permission"
+                }
+            },
+            "Role": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "label": {
+                        "type": "string",
+                        "example": "Managing Director"
+                    },
+                    "name": {
                         "description": "User role",
                         "type": "string",
                         "readOnly": "true",
                         "example": "ICT Admin"
                     },
-                    "grade_level_id": {
-                        "type": "string",
-                        "maxLength": 32,
-                        "example": "32"
+                    "max_slots": {
+                        "type": "integer",
+                        "example": "23"
                     },
-                    "group": {
-                        "type": "string",
-                        "maxLength": 32,
-                        "example": "Directors"
+                    "start_date": {
+                        "type": "date",
+                        "example": "2020-12-20"
+                    },
+                    "expire_date": {
+                        "type": "date",
+                        "example": "2020-12-20"
+                    },
+                    "isSuper": {
+                        "type": "boolean",
+                        "example": "True"
+                    },
+                    "deactivated": {
+                        "type": "boolean",
+                        "example": "False"
+                    },
+                    "created_at": {
+                        "type": "date",
+                        "example": "2020-10-20"
+                    },
+                    "updated_at": {
+                        "type": "date",
+                        "example": "2020-12-22"
                     }
                 },
                 "type": "object",
