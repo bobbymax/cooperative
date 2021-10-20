@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
      * @OA\Post(
      * path="/roles",
      *   tags={"Roles"},
-     *   summary=" Save user role",
+     *   summary="Save user role",
      *   operationId="roles",
      *
      *
@@ -111,56 +111,38 @@ use Illuminate\Support\Str;
      *     tags={"Roles"},
      *     description="Returns all roles on the system",
      *     operationId="findRoles",
-     *     @OA\Parameter(
-     *         name="role",
-     *         in="query",
-     *         description="roles to get",
-     *         required=false,
-     *         @OA\Schema(
-     *             type="array",
-     *             @OA\Items(type="string"),
-     *         ),
-     *         style="form"
-     *     ),
+     *
      *     @OA\Response(
      *         response=200,
-     *         description="pet response",
+     *         description="Success",
      *         @OA\JsonContent(
      *             type="array",
-     *             @OA\Items(ref="")
-     *         ),
-     *         @OA\XmlContent(
-     *             type="array",
-     *             @OA\Items(ref="")
-     *         ),
-     *         @OA\MediaType(
-     *             mediaType="text/xml",
-     *             @OA\Schema(
-     *                 type="array",
-     *                 @OA\Items(ref="")
-     *             ),
-     *         ),
-     *         @OA\MediaType(
-     *             mediaType="text/html",
-     *             @OA\Schema(
-     *                 type="array",
-     *                 @OA\Items(ref="")
-     *             ),
-     *         ),
-     *     ),
-     *     @OA\Response(
-     *         response="default",
-     *         description="unexpected error",
-     *         @OA\JsonContent(ref=""),
-     *         @OA\XmlContent(ref=""),
-     *         @OA\MediaType(
-     *             mediaType="text/xml",
-     *             @OA\Schema(ref="")
-     *         ),
-     *         @OA\MediaType(
-     *             mediaType="text/html",
-     *             @OA\Schema(ref="")
+     *             @OA\Items(ref="#/components/schemas/Role")
      *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Error"
+     *      )
+     *
+     * )
      *     )
      * )
      */

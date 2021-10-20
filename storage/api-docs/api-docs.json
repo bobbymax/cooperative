@@ -82,83 +82,34 @@
                 ],
                 "description": "Returns all roles on the system",
                 "operationId": "findRoles",
-                "parameters": [
-                    {
-                        "name": "role",
-                        "in": "query",
-                        "description": "roles to get",
-                        "required": false,
-                        "style": "form",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
                 "responses": {
                     "200": {
-                        "description": "pet response",
+                        "description": "Success",
                         "content": {
-                            "text/xml": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": ""
-                                    }
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": ""
-                                    }
-                                }
-                            },
                             "application/json": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": ""
-                                    }
-                                }
-                            },
-                            "application/xml": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": ""
+                                        "$ref": "#/components/schemas/Role"
                                     }
                                 }
                             }
                         }
                     },
-                    "default": {
-                        "description": "unexpected error",
-                        "content": {
-                            "text/xml": {
-                                "schema": {
-                                    "$ref": ""
-                                }
-                            },
-                            "text/html": {
-                                "schema": {
-                                    "$ref": ""
-                                }
-                            },
-                            "application/json": {
-                                "schema": {
-                                    "$ref": ""
-                                }
-                            },
-                            "application/xml": {
-                                "schema": {
-                                    "$ref": ""
-                                }
-                            }
-                        }
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "500": {
+                        "description": "Error"
                     }
                 }
             },
@@ -166,7 +117,7 @@
                 "tags": [
                     "Roles"
                 ],
-                "summary": " Save user role",
+                "summary": "Save user role",
                 "operationId": "roles",
                 "parameters": [
                     {
@@ -255,6 +206,35 @@
     },
     "components": {
         "schemas": {
+            "Role": {
+                "properties": {
+                    "role_id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "role": {
+                        "description": "User role",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "ICT Admin"
+                    },
+                    "grade_level_id": {
+                        "type": "string",
+                        "maxLength": 32,
+                        "example": "32"
+                    },
+                    "group": {
+                        "type": "string",
+                        "maxLength": 32,
+                        "example": "Directors"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Role"
+                }
+            },
             "User": {
                 "required": [
                     "password"
