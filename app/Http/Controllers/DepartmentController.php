@@ -7,6 +7,318 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
+
+/**
+     * @OA\Post(
+     * path="/departments",
+     *   tags={"Departments"},
+     *   summary="Save  department",
+     *   operationId="departments",
+     *
+     *
+     *   @OA\Parameter(
+     *      name="name",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   @OA\Parameter(
+     *      name="label",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="code",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string",
+     *
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="type",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string",
+     *          enum={"directorate", "division", "department", "unit"}
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="parentId",
+     *      in="query",
+     *      @OA\Schema(
+     *          type="integer",
+     *
+     *      )
+     * ),
+     *   @OA\Response(
+     *      response=200,
+     *       description="Success",
+     *      @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+        * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     )
+     *
+     * )
+     * )
+    */
+      /**
+     * @OA\Get(
+     *     path="/departments",
+     *     tags={"Departments"},
+     *      summary="Returns all departments on the system",
+     *     description="Returns all departments on the system",
+     *     operationId="findGroups",
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Department")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=204,
+     *       description="No data found!"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+       * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     )
+     * )
+     *    )
+     * )
+     */
+
+           /**
+     * @OA\Get(
+     *     path="/departments/{id}",
+     *     tags={"Departments"},
+     *     summary="Get department by id",
+     *     description="Returns based on id ",
+     *     operationId="showGroup",
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="department id to get",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Department")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid department id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
+
+                /**
+     * @OA\Get(
+     *     path="/departments/{id}/edit",
+     *     tags={"Departments"},
+     *      summary="Open form to edit department",
+     *     description="Returns based on id ",
+     *     operationId="editGroup",
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="department id to edit",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Department")
+     *         )
+     *
+     *     ),
+     *     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid department id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
+
+
+        /**
+     * @OA\Delete(
+     *     path="/departments/{id}",
+     *     tags={"Departments"},
+     *      summary="remove department from database",
+     *     description="Deletes department in database",
+     *     operationId="updateGroup",
+     *
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="department id to delete",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Department deleted successfully!",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Department")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid department id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
+
+
+                /**
+     * @OA\Put(
+     *     path="/departments/{id}",
+     *     tags={"Departments"},
+     *      summary="update department by id",
+     *     description="Updates department in database",
+     *     operationId="updateGroup",
+     *
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="department id to update",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Department updated successfully!",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Department")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid department id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
+
+
+
 class DepartmentController extends Controller
 {
     public function __construct()
@@ -28,7 +340,7 @@ class DepartmentController extends Controller
                 'data' => [],
                 'status' => 'info',
                 'message' => 'No data found'
-            ], 200);
+            ], 204);
         }
 
         return response()->json([
@@ -68,7 +380,7 @@ class DepartmentController extends Controller
                 'data' => $validator->errors(),
                 'status' => 'error',
                 'message' => 'Please fix the following errors:'
-            ], 200);
+            ], 500);
         }
 
         $department = Department::create([
@@ -83,7 +395,7 @@ class DepartmentController extends Controller
             'data' => $department,
             'status' => 'success',
             'message' => 'Department created successfully!'
-        ], 201);
+        ], 200);
     }
 
     /**

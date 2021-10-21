@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Property(property="id", type="integer", example="25"),
  * @OA\Property(property="key", type="string", example="Create Budget"),
  * @OA\Property(property="name", type="string", example="Create Budget"),
- * @OA\Property(property="module", ref="#/components/schemas/Module",description="module"),
+ * @OA\Property(property="module", type="string" ,description="module name"),
  * @OA\Property(property="created_at", type="date", example="2020-10-20"),
  * @OA\Property(property="updated_at", type="date", example="2020-12-22"),
 

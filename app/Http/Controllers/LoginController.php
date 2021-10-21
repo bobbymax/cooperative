@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
  * summary="Sign in",
  * description="Login by email, password",
  * operationId="authLogin",
- * tags={"auth"},
+ * tags={"Auth"},
  * @OA\RequestBody(
  *    required=true,
  *    description="Pass user credentials",

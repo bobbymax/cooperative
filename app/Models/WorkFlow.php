@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  *
  * @OA\Schema(
- * @OA\Xml(name="work_flows"),
+ * @OA\Xml(name="WorkFlow"),
  * @OA\Property(property="id", type="integer",  example="1"),
  * @OA\Property(property="module_id", type="integer",  example="1"),
  * @OA\Property(property="name", type="string", example="Leave Application"),
@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Property(property="created_at", type="date", example="2020-10-20"),
  * @OA\Property(property="updated_at", type="date", example="2020-12-22"),
  * )
- * Class Variation
+ * Class WorkFlow
  *
  */
 class WorkFlow extends Model

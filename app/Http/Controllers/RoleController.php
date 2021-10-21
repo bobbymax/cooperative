@@ -97,10 +97,15 @@ use Illuminate\Support\Str;
      *          response=403,
      *          description="Forbidden"
      *      ),
-     *      @OA\Response(
-     *          response=500,
-     *          description="Error"
-     *      )
+        * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     )
      *
      * )
      * )
@@ -138,11 +143,15 @@ use Illuminate\Support\Str;
      *          response=403,
      *          description="Forbidden"
      *      ),
-     *      @OA\Response(
-     *          response=500,
-     *          description="Internal Server Error"
-     *      )
+       * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
      *
+     *         )
+     *
+     *     )
      * )
      *     )
      * )
@@ -175,6 +184,15 @@ use Illuminate\Support\Str;
      *      response=404,
      *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
      *   ),
+     *     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
      *      @OA\Response(
      *          response=422,
      *          description="Invalid role id"
@@ -205,6 +223,15 @@ use Illuminate\Support\Str;
      *         @OA\JsonContent(
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/Role")
+     *         )
+     *
+     *     ),
+     *     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
      *         )
      *
      *     ),
