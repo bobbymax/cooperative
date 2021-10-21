@@ -71,6 +71,22 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong email address or password. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -103,13 +119,13 @@
                         "description": "Bad Request"
                     },
                     "404": {
-                        "description": "not found"
+                        "description": "Page Not Found. If error persists, contact info@ncdmb.gov.ng"
                     },
                     "403": {
                         "description": "Forbidden"
                     },
                     "500": {
-                        "description": "Error"
+                        "description": "Internal Server Error"
                     }
                 }
             },
@@ -192,13 +208,89 @@
                         "description": "Bad Request"
                     },
                     "404": {
-                        "description": "not found"
+                        "description": "Page Not Found. If error persists, contact info@ncdmb.gov.ng"
                     },
                     "403": {
                         "description": "Forbidden"
                     },
                     "500": {
                         "description": "Error"
+                    }
+                }
+            }
+        },
+        "/roles/{id}": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "description": "Returns based on id ",
+                "operationId": "showRole",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "role id to get",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Role"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+                    },
+                    "422": {
+                        "description": "Invalid role id"
+                    }
+                }
+            }
+        },
+        "/roles/{id}/edit": {
+            "get": {
+                "tags": [
+                    "Roles"
+                ],
+                "description": "Returns based on id ",
+                "operationId": "editRole",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "role id to edit",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Role"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+                    },
+                    "422": {
+                        "description": "Invalid role id"
                     }
                 }
             }

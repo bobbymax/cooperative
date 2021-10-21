@@ -34,6 +34,13 @@ use Illuminate\Support\Facades\Validator;
  *    @OA\JsonContent(
  *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
  *        )
+ *     ),
+ * * @OA\Response(
+ *    response=500,
+ *    description="Internal Server Error",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Sorry, wrong email address or password. Please try again")
+ *        )
  *     )
  * )
  */
@@ -77,6 +84,6 @@ class LoginController extends Controller
             ],
             'message' => 'Login Successful',
             'status' => 'success'
-        ]);
+        ], 200);
     }
 }

@@ -91,7 +91,7 @@ use Illuminate\Support\Str;
      *   ),
      *   @OA\Response(
      *      response=404,
-     *      description="not found"
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
      *   ),
      *      @OA\Response(
      *          response=403,
@@ -131,7 +131,7 @@ use Illuminate\Support\Str;
      *   ),
      *   @OA\Response(
      *      response=404,
-     *      description="not found"
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
      *   ),
      *      @OA\Response(
      *          response=403,
@@ -139,7 +139,7 @@ use Illuminate\Support\Str;
      *      ),
      *      @OA\Response(
      *          response=500,
-     *          description="Error"
+     *          description="Internal Server Error"
      *      )
      *
      * )
@@ -147,6 +147,77 @@ use Illuminate\Support\Str;
      * )
      */
 
+           /**
+     * @OA\Get(
+     *     path="/roles/{id}",
+     *     tags={"Roles"},
+     *     description="Returns based on id ",
+     *     operationId="showRole",
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="role id to get",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Role")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid role id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
+
+                /**
+     * @OA\Get(
+     *     path="/roles/{id}/edit",
+     *     tags={"Roles"},
+     *     description="Returns based on id ",
+     *     operationId="editRole",
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="role id to edit",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Role")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid role id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
 class RoleController extends Controller
 {
 
