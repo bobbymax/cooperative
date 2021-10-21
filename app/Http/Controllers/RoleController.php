@@ -109,6 +109,7 @@ use Illuminate\Support\Str;
      * @OA\Get(
      *     path="/roles",
      *     tags={"Roles"},
+     *      summary="Returns all roles on the system",
      *     description="Returns all roles on the system",
      *     operationId="findRoles",
      *
@@ -151,6 +152,7 @@ use Illuminate\Support\Str;
      * @OA\Get(
      *     path="/roles/{id}",
      *     tags={"Roles"},
+     *     summary="Get role by id",
      *     description="Returns based on id ",
      *     operationId="showRole",
      *   @OA\Parameter(
@@ -187,6 +189,7 @@ use Illuminate\Support\Str;
      * @OA\Get(
      *     path="/roles/{id}/edit",
      *     tags={"Roles"},
+     *      summary="Open form to edit role",
      *     description="Returns based on id ",
      *     operationId="editRole",
      *   @OA\Parameter(
@@ -218,6 +221,102 @@ use Illuminate\Support\Str;
      *     )
      * )
      */
+
+
+                /**
+     * @OA\Put(
+     *     path="/roles/{id}",
+     *     tags={"Roles"},
+     *      summary="update role by database",
+     *     description="Updates role in database",
+     *     operationId="updateRole",
+     *
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="role id to update",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Role updated successfully!",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Role")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid role id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
+
+                     /**
+     * @OA\Delete(
+     *     path="/roles/{id}",
+     *     tags={"Roles"},
+     *      summary="remove role from database",
+     *     description="Deletes role in database",
+     *     operationId="updateRole",
+     *
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="role id to delete",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Role deleted successfully!",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Role")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid role id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
+
 class RoleController extends Controller
 {
 

@@ -96,6 +96,7 @@
                 "tags": [
                     "Roles"
                 ],
+                "summary": "Returns all roles on the system",
                 "description": "Returns all roles on the system",
                 "operationId": "findRoles",
                 "responses": {
@@ -224,6 +225,7 @@
                 "tags": [
                     "Roles"
                 ],
+                "summary": "Get role by id",
                 "description": "Returns based on id ",
                 "operationId": "showRole",
                 "parameters": [
@@ -255,6 +257,100 @@
                         "description": "Invalid role id"
                     }
                 }
+            },
+            "put": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "update role by database",
+                "description": "Updates role in database",
+                "operationId": "updateRole",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "role id to update",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role updated successfully!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Role"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error, please fix the following error(s)!;",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+                    },
+                    "422": {
+                        "description": "Invalid role id"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Roles"
+                ],
+                "summary": "remove role from database",
+                "description": "Deletes role in database",
+                "operationId": "updateRole",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "role id to delete",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Role deleted successfully!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Role"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error, please fix the following error(s)!;",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+                    },
+                    "422": {
+                        "description": "Invalid role id"
+                    }
+                }
             }
         },
         "/roles/{id}/edit": {
@@ -262,6 +358,7 @@
                 "tags": [
                     "Roles"
                 ],
+                "summary": "Open form to edit role",
                 "description": "Returns based on id ",
                 "operationId": "editRole",
                 "parameters": [
