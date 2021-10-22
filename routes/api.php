@@ -8,7 +8,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 // Login User In
 Route::post('login', 'LoginController@login');
 
@@ -23,7 +22,6 @@ Route::apiResource('settings', 'SettingController');
 Route::apiResource('users', 'UserController');
 Route::apiResource('gradeLevels', 'GradeLevelController');
 
-
 // Procurement Module Routes
 Route::apiResource('serviceCategories', 'ServiceCategoryController');
 Route::apiResource('tags', 'TagController');
@@ -31,7 +29,10 @@ Route::apiResource('projects', 'ProjectCotroller');
 Route::apiResource('uploads', 'UploadController');
 Route::apiResource('companies', 'CompanyController');
 Route::apiResource('bids', 'BidController');
-Route::apiResource('expenditures', 'ExpenditureController');
+
+// Timeline Routes
+Route::apiResource('timelines', 'TimelineController');
+Route::apiResource('tasks', 'TaskController');
 
 // Finance and Accounting Routes
 Route::apiResource('accountCharts', 'AccountChartController');
@@ -45,6 +46,8 @@ Route::apiResource('ledgers', 'LedgerController');
 Route::apiResource('budgetHeads', 'BudgetHeadController');
 Route::apiResource('subBudgetHeads', 'SubBudgetHeadController');
 Route::apiResource('funds', 'FundController');
+Route::apiResource('expenditures', 'ExpenditureController');
+
 
 Route::fallback(function () {
     return response()->json([

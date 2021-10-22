@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
-use App\Models\User;
-use App\Models\Company;
+use App\Models\Milestone;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
-
-class AccountController extends Controller
+class MilestoneController extends Controller
 {
 
-    protected $holder;
-
+    /**
+     * Class Constructor
+     */
     public function __construct()
     {
         $this->middleware('auth:api');
     }
+
 
     /**
      * Display a listing of the resource.
@@ -26,9 +24,9 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $accounts = Account::latest()->get();
+        $milestones = Milestone::latest()->get();
 
-        if ($accounts->count() < 1) {
+        if ($milestones->count() < 1) {
             return response()->json([
                 'data' => [],
                 'status' => 'info',
@@ -37,9 +35,9 @@ class AccountController extends Controller
         }
 
         return response()->json([
-            'data' => $accounts,
+            'data' => $milestones,
             'status' => 'success',
-            'message' => 'Accounts List'
+            'message' => 'Tasks List'
         ], 200);
     }
 
@@ -62,12 +60,12 @@ class AccountController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'bank_name' => 'required|string|max:255',
-            'account_number' => 'required|string|max:255|unique:accounts',
-            'account_name' => 'required|string|max:255',
-            'entity' => 'required|string|in:staff,organization,vendor',
-            'holder' => 'required|string|in:staff,vendor',
-            'holder_id' => 'required|integer'
+            'project_id' => 'required|integer',
+            'duration' => 'required|integer',
+            'start_date' => 'required|date',
+            'expiry' => 'required|date',
+            'description' => 'required',
+            'measure' => 'required|string|in:minutes,hours,days,weeks,months,years'
         ]);
 
         if ($validator->fails()) {
@@ -78,88 +76,62 @@ class AccountController extends Controller
             ], 500);
         }
 
-        $this->holder = $this->getHolder($request->holder, $request->holder_id);
-
-        if (! $this->holder) {
-            return response()->json([
-                'data' => null,
-                'status' => 'error',
-                'message' => 'Invalid holder ID'
-            ], 422);
-        }
-
-        $account = new Account;
-
-        $account->bank_name = $request->bank_name;
-        $account->account_number = $request->account_number;
-        $account->account_name = $request->account_name;
-        $account->entity = $request->entity;
-        $this->holder->account()->save($account);
+        $milestone = Milestone::create($request->all());
 
         return response()->json([
-            'data' => $account,
+            'data' => $milestone,
             'status' => 'success',
-            'message' => 'Account has been created successfully!!'
+            'message' => 'Task Details have been created successfully!!'
         ], 201);
-    }
-
-
-    private function getHolder($str, $id)
-    {
-        switch ($str) {
-            case 'vendor':
-                return Company::find($id);
-                break;
-            
-            default:
-                return User::find($id);
-                break;
-        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Account  $account
+     * @param  \App\Models\Milestone  $milestone
      * @return \Illuminate\Http\Response
      */
-    public function show($account)
+    public function show($milestone)
     {
-        $account = Account::find($account);
-        if (! $account) {
+        $milestone = Milestone::find($milestone);
+
+        if (! $milestone) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
                 'message' => 'Invalid ID entered'
             ], 422);
         }
+
         return response()->json([
-            'data' => $account,
+            'data' => $milestone,
             'status' => 'success',
-            'message' => 'Account details'
+            'message' => 'Task details'
         ], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Account  $account
+     * @param  \App\Models\Milestone  $milestone
      * @return \Illuminate\Http\Response
      */
-    public function edit($account)
+    public function edit($milestone)
     {
-        $account = Account::find($account);
-        if (! $account) {
+        $milestone = Milestone::find($milestone);
+
+        if (! $milestone) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
                 'message' => 'Invalid ID entered'
             ], 422);
         }
+
         return response()->json([
-            'data' => $account,
+            'data' => $milestone,
             'status' => 'success',
-            'message' => 'Account details'
+            'message' => 'Task details'
         ], 200);
     }
 
@@ -167,16 +139,18 @@ class AccountController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Account  $account
+     * @param  \App\Models\Milestone  $milestone
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $account)
+    public function update(Request $request, $milestone)
     {
         $validator = Validator::make($request->all(), [
-            'bank_name' => 'required|string|max:255',
-            'account_number' => 'required|string|max:255',
-            'account_name' => 'required|string|max:255',
-            'entity' => 'required|string|in:staff,organization,vendor'
+            'project_id' => 'required|integer',
+            'duration' => 'required|integer',
+            'start_date' => 'required|date',
+            'expiry' => 'required|date',
+            'description' => 'required',
+            'measure' => 'required|string|in:minutes,hours,days,weeks,months,years'
         ]);
 
         if ($validator->fails()) {
@@ -187,8 +161,9 @@ class AccountController extends Controller
             ], 500);
         }
 
-        $account = Account::find($account);
-        if (! $account) {
+        $milestone = Milestone::find($milestone);
+
+        if (! $milestone) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
@@ -196,30 +171,26 @@ class AccountController extends Controller
             ], 422);
         }
 
-        $account->update([
-            'bank_name' => $request->bank_name,
-            'account_number' => $request->account_number,
-            'account_name' => $request->account_name,
-            'entity' => $request->entity
-        ]);
+        $milestone->update($request->all());
 
         return response()->json([
-            'data' => $account,
+            'data' => $milestone,
             'status' => 'success',
-            'message' => 'Account details'
+            'message' => 'Task Details have been updated successfully!!'
         ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Account  $account
+     * @param  \App\Models\Milestone  $milestone
      * @return \Illuminate\Http\Response
      */
-    public function destroy($account)
+    public function destroy($milestone)
     {
-        $account = Account::find($account);
-        if (! $account) {
+        $milestone = Milestone::find($milestone);
+
+        if (! $milestone) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
@@ -227,13 +198,13 @@ class AccountController extends Controller
             ], 422);
         }
 
-        $old = $account;
-        $account->delete();
+        $old = $milestone;
+        $milestone->delete();
 
         return response()->json([
             'data' => $old,
             'status' => 'success',
-            'message' => 'Account details'
+            'message' => 'Task Details have been updated successfully!!'
         ], 200);
     }
 }

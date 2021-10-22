@@ -21,6 +21,11 @@ class Project extends Model
         return $this->morphMany(Survey::class, 'surveyable');
     }
 
+    public function awarded()
+    {
+        return $this->belongsTo(Bid::class, 'bid_id');
+    }
+
     public function bids()
     {
         return $this->hasMany(Bid::class);
@@ -39,5 +44,10 @@ class Project extends Model
     public function expenditures()
     {
         return $this->morphMany(Expenditure::class, 'expenditureable');
+    }
+
+    public function milestones()
+    {
+        return $this->hasMany(Milestone::class);
     }
 }

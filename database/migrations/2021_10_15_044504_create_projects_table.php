@@ -22,6 +22,8 @@ class CreateProjectsTable extends Migration
             $table->bigInteger('department_id')->unsigned();
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
 
+            $table->bigInteger('bid_id')->default(0);
+
             $table->string('title');
             $table->string('label')->unique();
             $table->string('reference_no')->unique();
