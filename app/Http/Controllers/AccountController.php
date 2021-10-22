@@ -94,7 +94,7 @@ class AccountController extends Controller
         $account->account_number = $request->account_number;
         $account->account_name = $request->account_name;
         $account->entity = $request->entity;
-        $this->holder->account()->save($account);
+        $this->holder->accounts()->save($account);
 
         return response()->json([
             'data' => $account,
