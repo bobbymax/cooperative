@@ -368,7 +368,7 @@ class RoleController extends Controller
                 'data' => [],
                 'status' => 'info',
                 'message' => 'No data found!'
-            ], 404);
+            ], 200);
         }
 
         return response()->json([
@@ -434,7 +434,7 @@ class RoleController extends Controller
             'data' => $role,
             'status' => 'success',
             'message' => 'Role has been created successfully!'
-        ], 200);
+        ], 201);
     }
 
     /**

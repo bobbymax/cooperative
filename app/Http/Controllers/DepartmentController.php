@@ -340,7 +340,7 @@ class DepartmentController extends Controller
                 'data' => [],
                 'status' => 'info',
                 'message' => 'No data found'
-            ], 204);
+            ], 200);
         }
 
         return response()->json([
@@ -395,7 +395,7 @@ class DepartmentController extends Controller
             'data' => $department,
             'status' => 'success',
             'message' => 'Department created successfully!'
-        ], 200);
+        ], 201);
     }
 
     /**

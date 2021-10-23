@@ -320,7 +320,7 @@ class GradeLevelController extends Controller
                 'data' => [],
                 'status' => 'info',
                 'message' => 'No data found'
-            ], 204);
+            ], 200);
         }
 
         return response()->json([
@@ -370,7 +370,7 @@ class GradeLevelController extends Controller
             'data' => $gradeLevel,
             'status' => 'success',
             'message' => 'GradeLevel Created Successfully!'
-        ], 200);
+        ], 201);
     }
 
     /**

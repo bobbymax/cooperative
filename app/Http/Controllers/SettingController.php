@@ -363,7 +363,7 @@ class SettingController extends Controller
                 'data' => [],
                 'status' => 'info',
                 'message' => 'No data found'
-            ], 204);
+            ], 200);
         }
 
         return response()->json([

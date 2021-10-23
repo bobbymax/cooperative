@@ -320,7 +320,7 @@ class PermissionController extends Controller
                 'data' => [],
                 'status' => 'info',
                 'message' => 'No data found!'
-            ], 204);
+            ], 200);
         }
 
         return response()->json([
@@ -370,7 +370,7 @@ class PermissionController extends Controller
             'data' => $permission,
             'status' => 'success',
             'message' => 'Permission has been created successfully!'
-        ], 200);
+        ], 201);
     }
 
     /**
