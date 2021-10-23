@@ -2,23 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
-use App\Models\User;
-use App\Models\Company;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
-
-class AccountController extends Controller
+class CategoryController extends Controller
 {
-
-    protected $holder;
-
     public function __construct()
     {
         $this->middleware('auth:api');
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -26,9 +20,9 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $accounts = Account::latest()->get();
+        $categories = Category::latest()->get();
 
-        if ($accounts->count() < 1) {
+        if ($categories->count() < 1) {
             return response()->json([
                 'data' => [],
                 'status' => 'info',
@@ -37,9 +31,9 @@ class AccountController extends Controller
         }
 
         return response()->json([
-            'data' => $accounts,
+            'data' => $categories,
             'status' => 'success',
-            'message' => 'Accounts List'
+            'message' => 'Categories List'
         ], 200);
     }
 
@@ -62,71 +56,43 @@ class AccountController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'bank_name' => 'required|string|max:255',
-            'account_number' => 'required|string|max:255|unique:accounts',
-            'account_name' => 'required|string|max:255',
-            'entity' => 'required|string|in:staff,organization,vendor',
-            'holder' => 'required|string|in:staff,vendor',
-            'holder_id' => 'required|integer'
+            'name' => 'required|string|max:255',
+            'parentId' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'data' => $validator->errors(),
                 'status' => 'error',
-                'message' => 'Please fix the following errors:'
+                'message' => 'Please fix the following errors'
             ], 500);
         }
 
-        $this->holder = $this->getHolder($request->holder, $request->holder_id);
-
-        if (! $this->holder) {
-            return response()->json([
-                'data' => null,
-                'status' => 'error',
-                'message' => 'Invalid holder ID'
-            ], 422);
-        }
-
-        $account = new Account;
-
-        $account->bank_name = $request->bank_name;
-        $account->account_number = $request->account_number;
-        $account->account_name = $request->account_name;
-        $account->entity = $request->entity;
-        $this->holder->accounts()->save($account);
+        $category = Category::create([
+            'name' => $request->name,
+            'label' => Str::slug($request->name),
+            'type' => $request->type,
+            'description' => $request->description,
+            'parentId' => $request->parentId
+        ]);
 
         return response()->json([
-            'data' => $account,
+            'data' => $category,
             'status' => 'success',
-            'message' => 'Account has been created successfully!!'
+            'message' => 'Category has been created successfully!!'
         ], 201);
-    }
-
-
-    private function getHolder($str, $id)
-    {
-        switch ($str) {
-            case 'vendor':
-                return Company::find($id);
-                break;
-
-            default:
-                return User::find($id);
-                break;
-        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Account  $account
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show($account)
+    public function show($category)
     {
-        $account = Account::find($account);
-        if (! $account) {
+        $category = Category::find($category);
+        if (! $category) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
@@ -134,22 +100,22 @@ class AccountController extends Controller
             ], 422);
         }
         return response()->json([
-            'data' => $account,
+            'data' => $category,
             'status' => 'success',
-            'message' => 'Account details'
+            'message' => 'Category details'
         ], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Account  $account
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($account)
+    public function edit($category)
     {
-        $account = Account::find($account);
-        if (! $account) {
+        $category = Category::find($category);
+        if (! $category) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
@@ -157,9 +123,9 @@ class AccountController extends Controller
             ], 422);
         }
         return response()->json([
-            'data' => $account,
+            'data' => $category,
             'status' => 'success',
-            'message' => 'Account details'
+            'message' => 'Category details'
         ], 200);
     }
 
@@ -167,28 +133,26 @@ class AccountController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Account  $account
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $account)
+    public function update(Request $request, $category)
     {
         $validator = Validator::make($request->all(), [
-            'bank_name' => 'required|string|max:255',
-            'account_number' => 'required|string|max:255',
-            'account_name' => 'required|string|max:255',
-            'entity' => 'required|string|in:staff,organization,vendor'
+            'name' => 'required|string|max:255',
+            'parentId' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'data' => $validator->errors(),
                 'status' => 'error',
-                'message' => 'Please fix the following errors:'
+                'message' => 'Please fix the following errors'
             ], 500);
         }
 
-        $account = Account::find($account);
-        if (! $account) {
+        $category = Category::find($category);
+        if (! $category) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
@@ -196,30 +160,31 @@ class AccountController extends Controller
             ], 422);
         }
 
-        $account->update([
-            'bank_name' => $request->bank_name,
-            'account_number' => $request->account_number,
-            'account_name' => $request->account_name,
-            'entity' => $request->entity
+        $category->update([
+            'name' => $request->name,
+            'label' => Str::slug($request->name),
+            'type' => $request->type,
+            'description' => $request->description,
+            'parentId' => $request->parentId
         ]);
 
         return response()->json([
-            'data' => $account,
+            'data' => $category,
             'status' => 'success',
-            'message' => 'Account details'
+            'message' => 'Category has been updated successfully!!'
         ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Account  $account
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($account)
+    public function destroy($category)
     {
-        $account = Account::find($account);
-        if (! $account) {
+        $category = Category::find($category);
+        if (! $category) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
@@ -227,13 +192,13 @@ class AccountController extends Controller
             ], 422);
         }
 
-        $old = $account;
-        $account->delete();
+        $old = $category;
+        $category->delete();
 
         return response()->json([
             'data' => $old,
             'status' => 'success',
-            'message' => 'Account details'
+            'message' => 'Category has been deleted successfully!!'
         ], 200);
     }
 }

@@ -26,8 +26,18 @@ class Department extends Model
         return $this->morphToMany(Module::class, 'moduleable');
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     public function batches()
     {
         return $this->hasMany(Batch::class);
+    }
+
+    public function requisitions()
+    {
+        return $this->hasMany(Requisition::class);
     }
 }

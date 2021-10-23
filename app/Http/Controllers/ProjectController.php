@@ -331,7 +331,7 @@ class ProjectController extends Controller
             'evaluated_amount' => $request->evaluated_amount,
         ]);
 
-        if ($request->files) {
+        if ($request->has('files')) {
             $this->addUploadsToProject($request->files, $project);
         }
 
