@@ -368,7 +368,7 @@ class RoleController extends Controller
                 'data' => [],
                 'status' => 'info',
                 'message' => 'No data found!'
-            ], 200);
+            ], 404);
         }
 
         return response()->json([

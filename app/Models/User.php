@@ -100,8 +100,23 @@ class User extends Authenticatable
         return $this->groups()->save($group);
     }
 
+    public function accounts()
+    {
+        return $this->morphMany(Account::class, 'accountable');
+    }
+
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id');
+    }
+
+    public function batches()
+    {
+        return $this->hasMany(Batch::class);
+    }
+
+    public function journals()
+    {
+        return $this->hasMany(Journal::class);
     }
 }

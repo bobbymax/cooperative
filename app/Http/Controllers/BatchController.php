@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bid;
-use App\Models\Submission;
+use App\Models\Batch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-// use Illuminate\Support\Str;
 
-
-class BidController extends Controller
+class BatchController extends Controller
 {
     public function __construct()
     {
@@ -23,20 +20,20 @@ class BidController extends Controller
      */
     public function index()
     {
-        $bids = Bid::latest()->get();
+        $batches = Batch::latest()->get();
 
-        if ($bids->count() < 1) {
+        if ($batches->count() < 1) {
             return response()->json([
                 'data' => [],
                 'status' => 'info',
-                'message' => 'No data found'
-            ], 200);
+                'message' => 'No data found!'
+            ], 404);
         }
 
         return response()->json([
-            'data' => $bids,
+            'data' => $batches,
             'status' => 'success',
-            'message' => 'Bid List'
+            'message' => 'Account Codes List'
         ], 200);
     }
 
@@ -59,83 +56,79 @@ class BidController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'project_id' => 'required|integer',
-            'company_id' => 'required|integer',
-            'amount' => 'required|integer'
+            'reference_no' => 'required|string',
+            'amount' => 'required|integer',
+            'sub_budget_head_id' => 'required|integer',
+            'department_id' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'data' => $validator->errors(),
                 'status' => 'error',
-                'message' => 'Please fix the following error(s):'
+                'message' => 'Please fix the following errors:'
             ], 500);
         }
 
-        $status = $request->proposal !== "" ? 'proposed' : 'draft';
-
-        $bid = Bid::create([
-            'project_id' => $request->project_id,
-            'company_id' => $request->company_id,
+        $batch = Batch::create([
+            'sub_budget_head_id' => $request->sub_budget_head_id,
+            'department_id' => $request->department_id,
+            'user_id' => auth()->user()->id,
+            'reference_no' => $request->reference_no,
             'amount' => $request->amount,
-            'proposal' => $request->proposal ?? null,
-            'status' => $status,
+            'no_of_payments' => $request->no_of_payments
         ]);
 
         return response()->json([
-            'data' => $bid,
+            'data' => $batch,
             'status' => 'success',
-            'message' => 'Bid Created Successfully!'
+            'message' => 'Batch has been created successfully!!'
         ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Bid  $bid
+     * @param  \App\Models\Batch  $batch
      * @return \Illuminate\Http\Response
      */
-    public function show($bid)
+    public function show($batch)
     {
-        $bid = Bid::find($bid);
-
-        if (! $bid) {
+        $batch = Batch::find($batch);
+        if (! $batch) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid token'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $bid,
+            'data' => $batch,
             'status' => 'success',
-            'message' => 'Bid Details'
+            'message' => 'Batch details'
         ], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Bid  $bid
+     * @param  \App\Models\Batch  $batch
      * @return \Illuminate\Http\Response
      */
-    public function edit($bid)
+    public function edit($batch)
     {
-        $bid = Bid::find($bid);
-
-        if (! $bid) {
+        $batch = Batch::find($batch);
+        if (! $batch) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid token'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $bid,
+            'data' => $batch,
             'status' => 'success',
-            'message' => 'Bid Details'
+            'message' => 'Batch details'
         ], 200);
     }
 
@@ -143,92 +136,74 @@ class BidController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Bid  $bid
+     * @param  \App\Models\Batch  $batch
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $bid)
+    public function update(Request $request, $batch)
     {
         $validator = Validator::make($request->all(), [
-            'amount' => 'required|integer',
-            'proposal' => 'required|string',
-            'technical_document' => 'required|string',
-            'financial_document' => 'required|string',
-            'submissions' => 'required|array',
-            'status' => 'required|string|in:registered,draft,invitation,tenders,closed'
+            'sub_budget_head_id' => 'required|integer',
+            'department_id' => 'required|integer',
+            'reference_no' => 'required|string',
+            'amount' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'data' => $validator->errors(),
                 'status' => 'error',
-                'message' => 'Please fix the following error(s):'
+                'message' => 'Please fix the following errors:'
             ], 500);
         }
 
-        $bid = Bid::find($bid);
-
-        if (! $bid) {
+        $batch = Batch::find($batch);
+        if (! $batch) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid token'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
 
-        $bid->update([
+        $batch->update([
+            'sub_budget_head_id' => $request->sub_budget_head_id,
+            'department_id' => $request->department_id,
+            'reference_no' => $request->reference_no,
             'amount' => $request->amount,
-            'proposal' => $request->proposal,
-            'technical_document' => $request->technical_document,
-            'financial_document' => $request->financial_document,
-            'status' => $request->status
+            'no_of_payments' => $request->no_of_payments
         ]);
 
-        if ($bid && $request->submissions) {
-
-            foreach ($request->submissions as $data) {
-                $submission = new Submission;
-
-                $submission->survey_id = $data['survey_id'];
-                $submission->answer = $data['answer'];
-                $submission->score = $data['score'];
-                $submission->correct = $data['correct'];
-
-                $bid->submissions()->save($submission);
-            }
-        }
-
         return response()->json([
-            'data' => $bid,
+            'data' => $batch,
             'status' => 'success',
-            'message' => 'Bid Updated Successfully!'
+            'message' => 'Batch details updated successfully!'
         ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Bid  $bid
+     * @param  \App\Models\Batch  $batch
      * @return \Illuminate\Http\Response
      */
-    public function destroy($bid)
+    public function destroy($batch)
     {
-        $bid = Bid::find($bid);
-
-        if (! $bid) {
+        $batch = Batch::find($batch);
+        if (! $batch) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
-                'message' => 'Invalid token'
+                'message' => 'Invalid ID entered'
             ], 422);
         }
 
-        $old = $bid;
-        $bid->delete();
+        $old = $batch;
+        $batch->delete();
 
         return response()->json([
             'data' => $old,
             'status' => 'success',
-            'message' => 'Bid recorded Successfully!'
+            'message' => 'Batch details updated successfully!'
         ], 200);
     }
 }

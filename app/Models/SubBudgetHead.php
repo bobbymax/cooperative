@@ -47,4 +47,9 @@ class SubBudgetHead extends Model
     {
         return $this->funds->where('budget_year', $year)->first();
     }
+
+    public function batches()
+    {
+        return $this->hasMany(Batch::class);
+    }
 }

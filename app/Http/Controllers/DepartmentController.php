@@ -371,6 +371,7 @@ class DepartmentController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:7|unique:departments',
+            'department_code' => 'required|string|unique:departments',
             'type' => 'required|string|in:directorate,division,department,unit',
             'parentId' => 'required'
         ]);
@@ -387,6 +388,7 @@ class DepartmentController extends Controller
             'name' => $request->name,
             'label' => Str::slug($request->name),
             'code' => $request->code,
+            'department_code' => $request->department_code,
             'type' => $request->type,
             'parentId' => $request->parentId
         ]);
@@ -459,6 +461,7 @@ class DepartmentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
+            'department_code' => 'required|string',
             'type' => 'required|string|in:directorate,division,department,unit',
             'parentId' => 'required'
         ]);
@@ -485,6 +488,7 @@ class DepartmentController extends Controller
             'name' => $request->name,
             'label' => Str::slug($request->name),
             'code' => $request->code,
+            'department_code' => $request->department_code,
             'type' => $request->type,
             'parentId' => $request->parentId
         ]);

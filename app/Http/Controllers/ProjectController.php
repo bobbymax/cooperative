@@ -480,7 +480,8 @@ class ProjectController extends Controller
             'reference_no' => 'required|string|max:255',
             'location' => 'required|string|max:255',
             'description' => 'required',
-            'proposed_amount' => 'required|integer'
+            'proposed_amount' => 'required|integer',
+            'measureIn' => 'required|string|in:days,weeks,months,years'
         ]);
 
         if ($validator->fails()) {
@@ -500,7 +501,7 @@ class ProjectController extends Controller
             'reference_no' => $request->reference_no,
             'location' => $request->location,
             'duration' => $request->duration,
-            'measuredIn' => $request->measuredIn,
+            'measureIn' => $request->measuredIn,
             'coordinates' => $request->coordinates,
             'mobilization' => $request->mobilization,
             'description' => $request->description,

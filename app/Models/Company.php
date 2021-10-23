@@ -57,4 +57,9 @@ class Company extends Model
     {
         return $this->hasManyThrough(Submission::class, Bid::class);
     }
+
+    public function accounts()
+    {
+        return $this->morphMany(Account::class, 'accountable');
+    }
 }
