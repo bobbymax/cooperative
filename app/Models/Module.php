@@ -7,6 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Permission;
 use Illuminate\Support\Str;
 
+/**
+ *
+ * @OA\Schema(
+ * @OA\Xml(name="Module"),
+ * @OA\Property(property="id", type="integer", example="05"),
+ * @OA\Property(property="name", type="string", example="Procurement Management Module"),
+ * @OA\Property(property="label", type="string", example="Procurement Management"),
+ * @OA\Property(property="code", type="string", example="PMM"),
+ * @OA\Property(property="path", type="string", example="moduule path"),
+ * @OA\Property(property="icon", type="string", example= "Icon path") ,
+ * @OA\Property(property="parentId", type="integer", example="05"),
+ * @OA\Property(property="quickAccess", type="boolean", example="False"),
+ * @OA\Property(property="type", type="string", enum={"application","module","page"} , example="Approved"),
+ * @OA\Property(property="generatePermissions", type="boolean", example="False"),
+ * @OA\Property(property="created_at", type="date", example="2020-10-20"),
+ * @OA\Property(property="updated_at", type="date", example="2020-12-22"),
+ * @OA\Property(property="deleted_at", type="date", example="2020-12-22")
+ * )
+ * Class Module
+ *
+ */
+
 class Module extends Model
 {
     use HasFactory;

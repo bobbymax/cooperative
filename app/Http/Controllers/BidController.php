@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 // use Illuminate\Support\Str;
 
+
 class BidController extends Controller
 {
     public function __construct()
@@ -192,7 +193,7 @@ class BidController extends Controller
                 $submission->score = $data['score'];
                 $submission->correct = $data['correct'];
 
-                $bid->submissions()->save($submission);   
+                $bid->submissions()->save($submission);
             }
         }
 
