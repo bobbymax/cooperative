@@ -7,6 +7,7 @@ use App\Models\Process;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Models\Group;
 
 /**
      * @OA\Post(
