@@ -2,22 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Milestone;
+use App\Models\Allocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class MilestoneController extends Controller
+class AllocationController extends Controller
 {
-
-    /**
-     * Class Constructor
-     */
     public function __construct()
     {
         $this->middleware('auth:api');
     }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -25,9 +19,9 @@ class MilestoneController extends Controller
      */
     public function index()
     {
-        $milestones = Milestone::latest()->get();
+        $allocations = Allocation::latest()->get();
 
-        if ($milestones->count() < 1) {
+        if ($allocations->count() < 1) {
             return response()->json([
                 'data' => [],
                 'status' => 'info',
@@ -36,9 +30,9 @@ class MilestoneController extends Controller
         }
 
         return response()->json([
-            'data' => $milestones,
+            'data' => $allocations,
             'status' => 'success',
-            'message' => 'Tasks List'
+            'message' => 'Allocations List'
         ], 200);
     }
 
@@ -61,12 +55,9 @@ class MilestoneController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'project_id' => 'required|integer',
-            'duration' => 'required|integer',
-            'start_date' => 'required|date',
-            'expiry' => 'required|date',
-            'description' => 'required',
-            'measure' => 'required|string|in:minutes,hours,days,weeks,months,years'
+            'user_id' => 'required|integer',
+            'item_id' => 'required|integer',
+            'quantity' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -77,62 +68,58 @@ class MilestoneController extends Controller
             ], 500);
         }
 
-        $milestone = Milestone::create($request->all());
+        $allocation = Allocation::create($request->all());
 
         return response()->json([
-            'data' => $milestone,
+            'data' => $allocation,
             'status' => 'success',
-            'message' => 'Task Details have been created successfully!!'
+            'message' => 'Allocation has been created successfully!!'
         ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Milestone  $milestone
+     * @param  \App\Models\Allocation  $allocation
      * @return \Illuminate\Http\Response
      */
-    public function show($milestone)
+    public function show($allocation)
     {
-        $milestone = Milestone::find($milestone);
-
-        if (! $milestone) {
+        $allocation = Allocation::find($allocation);
+        if (! $allocation) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
                 'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $milestone,
+            'data' => $allocation,
             'status' => 'success',
-            'message' => 'Task details'
+            'message' => 'Allocation details'
         ], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Milestone  $milestone
+     * @param  \App\Models\Allocation  $allocation
      * @return \Illuminate\Http\Response
      */
-    public function edit($milestone)
+    public function edit($allocation)
     {
-        $milestone = Milestone::find($milestone);
-
-        if (! $milestone) {
+        $allocation = Allocation::find($allocation);
+        if (! $allocation) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
                 'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $milestone,
+            'data' => $allocation,
             'status' => 'success',
-            'message' => 'Task details'
+            'message' => 'Allocation details'
         ], 200);
     }
 
@@ -140,18 +127,15 @@ class MilestoneController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Milestone  $milestone
+     * @param  \App\Models\Allocation  $allocation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $milestone)
+    public function update(Request $request, $allocation)
     {
         $validator = Validator::make($request->all(), [
-            'project_id' => 'required|integer',
-            'duration' => 'required|integer',
-            'start_date' => 'required|date',
-            'expiry' => 'required|date',
-            'description' => 'required',
-            'measure' => 'required|string|in:minutes,hours,days,weeks,months,years'
+            'user_id' => 'required|integer',
+            'item_id' => 'required|integer',
+            'quantity' => 'required|integer'
         ]);
 
         if ($validator->fails()) {
@@ -162,9 +146,8 @@ class MilestoneController extends Controller
             ], 500);
         }
 
-        $milestone = Milestone::find($milestone);
-
-        if (! $milestone) {
+        $allocation = Allocation::find($allocation);
+        if (! $allocation) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
@@ -172,26 +155,25 @@ class MilestoneController extends Controller
             ], 422);
         }
 
-        $milestone->update($request->all());
+        $allocation->update($request->all());
 
         return response()->json([
-            'data' => $milestone,
+            'data' => $allocation,
             'status' => 'success',
-            'message' => 'Task Details have been updated successfully!!'
+            'message' => 'Allocation has been updated successfully!!'
         ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Milestone  $milestone
+     * @param  \App\Models\Allocation  $allocation
      * @return \Illuminate\Http\Response
      */
-    public function destroy($milestone)
+    public function destroy($allocation)
     {
-        $milestone = Milestone::find($milestone);
-
-        if (! $milestone) {
+        $allocation = Allocation::find($allocation);
+        if (! $allocation) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
@@ -199,13 +181,13 @@ class MilestoneController extends Controller
             ], 422);
         }
 
-        $old = $milestone;
-        $milestone->delete();
+        $old = $allocation;
+        $allocation->delete();
 
         return response()->json([
             'data' => $old,
             'status' => 'success',
-            'message' => 'Task Details have been updated successfully!!'
+            'message' => 'Allocation has been deleted successfully!!'
         ], 200);
     }
 }

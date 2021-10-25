@@ -6,6 +6,7 @@ use App\Models\Expenditure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Models\Project;
 
 class ExpenditureController extends Controller
 {
@@ -116,7 +117,7 @@ class ExpenditureController extends Controller
             case 'project':
                 return Project::find($id);
                 break;
-            
+
             default:
                 return null;
                 break;

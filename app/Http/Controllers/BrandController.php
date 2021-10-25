@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Milestone;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
-class MilestoneController extends Controller
+class BrandController extends Controller
 {
-
-    /**
-     * Class Constructor
-     */
     public function __construct()
     {
         $this->middleware('auth:api');
     }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -25,9 +20,9 @@ class MilestoneController extends Controller
      */
     public function index()
     {
-        $milestones = Milestone::latest()->get();
+        $brands = Brand::latest()->get();
 
-        if ($milestones->count() < 1) {
+        if ($brands->count() < 1) {
             return response()->json([
                 'data' => [],
                 'status' => 'info',
@@ -36,9 +31,9 @@ class MilestoneController extends Controller
         }
 
         return response()->json([
-            'data' => $milestones,
+            'data' => $brands,
             'status' => 'success',
-            'message' => 'Tasks List'
+            'message' => 'Brands List'
         ], 200);
     }
 
@@ -61,78 +56,72 @@ class MilestoneController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'project_id' => 'required|integer',
-            'duration' => 'required|integer',
-            'start_date' => 'required|date',
-            'expiry' => 'required|date',
-            'description' => 'required',
-            'measure' => 'required|string|in:minutes,hours,days,weeks,months,years'
+            'name' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'data' => $validator->errors(),
                 'status' => 'error',
-                'message' => 'Please fix the following errors:'
+                'message' => 'Please fix the following errors'
             ], 500);
         }
 
-        $milestone = Milestone::create($request->all());
+        $brand = Brand::create([
+            'name' => $request->name,
+            'label' => Str::slug($request->name)
+        ]);
 
         return response()->json([
-            'data' => $milestone,
+            'data' => $brand,
             'status' => 'success',
-            'message' => 'Task Details have been created successfully!!'
+            'message' => 'Brand has been created successfully!!'
         ], 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Milestone  $milestone
+     * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function show($milestone)
+    public function show($brand)
     {
-        $milestone = Milestone::find($milestone);
-
-        if (! $milestone) {
+        $brand = Brand::find($brand);
+        if (! $brand) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
                 'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $milestone,
+            'data' => $brand,
             'status' => 'success',
-            'message' => 'Task details'
+            'message' => 'Brand details'
         ], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Milestone  $milestone
+     * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function edit($milestone)
+    public function edit($brand)
     {
-        $milestone = Milestone::find($milestone);
-
-        if (! $milestone) {
+        $brand = Brand::find($brand);
+        if (! $brand) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
                 'message' => 'Invalid ID entered'
             ], 422);
         }
-
         return response()->json([
-            'data' => $milestone,
+            'data' => $brand,
             'status' => 'success',
-            'message' => 'Task details'
+            'message' => 'Brand details'
         ], 200);
     }
 
@@ -140,31 +129,25 @@ class MilestoneController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Milestone  $milestone
+     * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $milestone)
+    public function update(Request $request, $brand)
     {
         $validator = Validator::make($request->all(), [
-            'project_id' => 'required|integer',
-            'duration' => 'required|integer',
-            'start_date' => 'required|date',
-            'expiry' => 'required|date',
-            'description' => 'required',
-            'measure' => 'required|string|in:minutes,hours,days,weeks,months,years'
+            'name' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'data' => $validator->errors(),
                 'status' => 'error',
-                'message' => 'Please fix the following errors:'
+                'message' => 'Please fix the following errors'
             ], 500);
         }
 
-        $milestone = Milestone::find($milestone);
-
-        if (! $milestone) {
+        $brand = Brand::find($brand);
+        if (! $brand) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
@@ -172,26 +155,28 @@ class MilestoneController extends Controller
             ], 422);
         }
 
-        $milestone->update($request->all());
+        $brand->update([
+            'name' => $request->name,
+            'label' => Str::slug($request->name)
+        ]);
 
         return response()->json([
-            'data' => $milestone,
+            'data' => $brand,
             'status' => 'success',
-            'message' => 'Task Details have been updated successfully!!'
+            'message' => 'Brand has been updated successfully!!'
         ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Milestone  $milestone
+     * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function destroy($milestone)
+    public function destroy(Brand $brand)
     {
-        $milestone = Milestone::find($milestone);
-
-        if (! $milestone) {
+        $brand = Brand::find($brand);
+        if (! $brand) {
             return response()->json([
                 'data' => null,
                 'status' => 'error',
@@ -199,13 +184,13 @@ class MilestoneController extends Controller
             ], 422);
         }
 
-        $old = $milestone;
-        $milestone->delete();
+        $old = $brand;
+        $brand->update();
 
         return response()->json([
             'data' => $old,
             'status' => 'success',
-            'message' => 'Task Details have been updated successfully!!'
+            'message' => 'Brand has been updated successfully!!'
         ], 200);
     }
 }

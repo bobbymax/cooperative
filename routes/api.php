@@ -48,6 +48,13 @@ Route::apiResource('subBudgetHeads', 'SubBudgetHeadController');
 Route::apiResource('funds', 'FundController');
 Route::apiResource('expenditures', 'ExpenditureController');
 
+// Inventory/Store Routes
+Route::apiResource('categories', 'CategoryController');
+Route::apiResource('products', 'ProductController');
+Route::apiResource('brands', 'BrandController');
+Route::apiResource('requisitions', 'RequisitionController');
+Route::apiResource('allocations', 'AllocationController');
+
 
 Route::fallback(function () {
     return response()->json([

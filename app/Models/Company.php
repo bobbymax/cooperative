@@ -62,4 +62,9 @@ class Company extends Model
     {
         return $this->morphMany(Account::class, 'accountable');
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
