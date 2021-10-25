@@ -15,4 +15,14 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function tickets()
+    {
+        return $this->hasManyThrough(Ticket::class, Concern::class);
+    }
+
+    public function concerns()
+    {
+        return $this->hasMany(Concern::class);
+    }
 }
