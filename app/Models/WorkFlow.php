@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  * @OA\Xml(name="WorkFlow"),
  * @OA\Property(property="id", type="integer",  example="1"),
- * @OA\Property(property="module_id", type="integer",  example="1"),
  * @OA\Property(property="name", type="string", example="Leave Application"),
  * @OA\Property(property="label", type="string", example="Leave Application"),
  * @OA\Property(property="type", type="string", enum={"sequence", "broadcast"}, example="sequence"),
@@ -26,8 +25,8 @@ class WorkFlow extends Model
 
     protected $guarded = [''];
 
-    public function module()
+    public function processes()
     {
-        return $this->belongsTo(Module::class, 'module_id');
+        return $this->hasMany(Process::class);
     }
 }

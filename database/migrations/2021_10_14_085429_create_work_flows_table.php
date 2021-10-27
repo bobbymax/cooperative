@@ -15,8 +15,6 @@ class CreateWorkFlowsTable extends Migration
     {
         Schema::create('work_flows', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('module_id')->unsigned();
-            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
             $table->string('name');
             $table->string('label')->unique();
             $table->enum('type', ['sequence', 'broadcast'])->default('sequence');

@@ -25,7 +25,7 @@ Route::apiResource('gradeLevels', 'GradeLevelController');
 // Procurement Module Routes
 Route::apiResource('serviceCategories', 'ServiceCategoryController');
 Route::apiResource('tags', 'TagController');
-Route::apiResource('projects', 'ProjectCotroller');
+Route::apiResource('projects', 'ProjectController');
 Route::apiResource('uploads', 'UploadController');
 Route::apiResource('companies', 'CompanyController');
 Route::apiResource('bids', 'BidController');
