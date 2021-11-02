@@ -26,4 +26,14 @@ use Illuminate\Database\Eloquent\Model;
 class Process extends Model
 {
     use HasFactory;
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class, 'group_id');
+    }
+
+    public function workFlow()
+    {
+        return $this->belongsTo(WorkFlow::class, 'work_flow_id');
+    }
 }

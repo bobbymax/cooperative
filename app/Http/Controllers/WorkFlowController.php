@@ -18,14 +18,6 @@ use App\Models\Group;
      *
      *
      *   @OA\Parameter(
-     *      name="module_id",
-     *      in="query",
-     *      required=true,
-     *      @OA\Schema(
-     *           type="integer"
-     *      )
-     *   ),
-     *   @OA\Parameter(
      *      name="name",
      *      in="query",
      *      required=true,

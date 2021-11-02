@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWorkFlowsTable extends Migration
+class CreateConcernsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,15 @@ class CreateWorkFlowsTable extends Migration
      */
     public function up()
     {
-        Schema::create('work_flows', function (Blueprint $table) {
+        Schema::create('concerns', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+
             $table->string('name');
             $table->string('label')->unique();
-            $table->enum('type', ['sequence', 'broadcast'])->default('sequence');
+
+            $table->text('specifications')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ class CreateWorkFlowsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('work_flows');
+        Schema::dropIfExists('concerns');
     }
 }
