@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-// use Illuminate\Support\Str;
 
 class TodoController extends Controller
 {
-
     /**
      * Class Constructor
      */
@@ -17,7 +15,6 @@ class TodoController extends Controller
     {
         $this->middleware('auth:api');
     }
-
 
     /**
      * Display a listing of the resource.

@@ -29,10 +29,12 @@ Route::apiResource('projects', 'ProjectController');
 Route::apiResource('uploads', 'UploadController');
 Route::apiResource('companies', 'CompanyController');
 Route::apiResource('bids', 'BidController');
+Route::apiResource('milestones', 'MilestoneController');
 
 // Timeline Routes
 Route::apiResource('timelines', 'TimelineController');
 Route::apiResource('tasks', 'TaskController');
+Route::apiResource('todos', 'TodoController');
 
 // Finance and Accounting Routes
 Route::apiResource('accountCharts', 'AccountChartController');
