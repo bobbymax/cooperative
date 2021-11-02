@@ -7,6 +7,328 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+
+/**
+     * @OA\Post(
+     * path="/requisitions",
+     *   tags={"Requisitions"},
+     *   summary="Save  requisition",
+     *   operationId="requisitions",
+     *
+     *
+     *   @OA\Parameter(
+     *      name="user_id",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="integer"
+     *      )
+     *   ),
+     *   @OA\Parameter(
+     *      name="department_id",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="reference_no",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string",
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="description",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string",
+     *          enum={"purchase", "request"}
+     *      )
+     * ),
+     * @OA\Parameter(
+     *      name="status",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string",
+     *          enum={"pending", "approved", "declined"}
+     *
+     *      )
+     *
+     *   ),
+     *   @OA\Response(
+     *      response=200,
+     *       description="Success",
+     *      @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+        * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     )
+     *
+     * )
+     * )
+    */
+      /**
+     * @OA\Get(
+     *     path="/requisitions",
+     *     tags={"Requisitions"},
+     *      summary="Returns all requisitions on the system",
+     *     description="Returns all requisitions on the system",
+     *     operationId="findRoles",
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Requisition")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+       * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     )
+     * )
+     *     )
+     * )
+     */
+
+           /**
+     * @OA\Get(
+     *     path="/requisitions/{id}",
+     *     tags={"Requisitions"},
+     *     summary="Get requisition by id",
+     *     description="Returns based on id ",
+     *     operationId="showRole",
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="requisition id to get",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Requisition")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid requisition id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
+
+                /**
+     * @OA\Get(
+     *     path="/requisitions/{id}/edit",
+     *     tags={"Requisitions"},
+     *      summary="Open form to edit requisition",
+     *     description="Returns based on id ",
+     *     operationId="editRole",
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="requisition id to edit",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Requisition")
+     *         )
+     *
+     *     ),
+     *     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid requisition id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
+
+
+                /**
+     * @OA\Put(
+     *     path="/requisitions/{id}",
+     *     tags={"Requisitions"},
+     *      summary="update requisition by database",
+     *     description="Updates requisition in database",
+     *     operationId="updateRole",
+     *
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="requisition id to update",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Requisition updated successfully!",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Requisition")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid requisition id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
+
+                     /**
+     * @OA\Delete(
+     *     path="/requisitions/{id}",
+     *     tags={"Requisitions"},
+     *      summary="remove requisition from database",
+     *     description="Deletes requisition in database",
+     *     operationId="updateRole",
+     *
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="requisition id to delete",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Requisition deleted successfully!",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Requisition")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid requisition id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
 class RequisitionController extends Controller
 {
     /**

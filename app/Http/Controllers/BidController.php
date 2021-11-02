@@ -8,7 +8,373 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 // use Illuminate\Support\Str;
 
+/**
+     * @OA\Post(
+     * path="/bids",
+     *   tags={"Bids"},
+     *   summary="Save  bids",
+     *   operationId="bids",
+     *
+     *
+     *   @OA\Parameter(
+     *      name="project_id",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="integer"
+     *      )
+     *   ),
+     *   @OA\Parameter(
+     *      name="company_id",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     *  @OA\Parameter(
+     *      name="amount",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="number",
+     *          format = "double"
+     *      )
+     * ),
+     *  @OA\Parameter(
+     *      name="proposal",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     * ),
+     *  @OA\Parameter(
+     *      name="invite",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     * ),
+     *  @OA\Parameter(
+     *      name="technical_document",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     * ),
+     * *  @OA\Parameter(
+     *      name="financial_document",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     * ),
+     * *  @OA\Parameter(
+     *      name="description",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string"
+     *      )
+     * ),
+     * *  @OA\Parameter(
+     *      name="score",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="integer"
+     *      )
+     * ),
+     * *  @OA\Parameter(
+     *      name="status",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="string",
+     *          enum={"registered", "draft", "invitation", "tenders", "closed"}
+     *      )
+     * ),
+     * *  @OA\Parameter(
+     *      name="awarded",
+     *      in="query",
+     *      required=true,
+     *      @OA\Schema(
+     *          type="boolean"
+     *      )
+     * ),
+     *   @OA\Response(
+     *      response=200,
+     *       description="Success",
+     *      @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *   ),
+     *   @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+        * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     )
+     *
+     * )
+     * )
+    */
+      /**
+     * @OA\Get(
+     *     path="/bids",
+     *     tags={"Bids"},
+     *      summary="Returns all bids on the system",
+     *     description="Returns all bids on the system",
+     *     operationId="findRoles",
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Bid")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=401,
+     *       description="Unauthenticated"
+     *   ),
+     *   @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     *   @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="No Data Found!"
+     *      ),
+       * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     )
+     * )
+     *     )
+     * )
+     */
 
+           /**
+     * @OA\Get(
+     *     path="/bids/{id}",
+     *     tags={"Bids"},
+     *     summary="Get bids by id",
+     *     description="Returns based on id ",
+     *     operationId="showRole",
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="bids id to get",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Bid")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid bids id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
+
+                /**
+     * @OA\Get(
+     *     path="/bids/{id}/edit",
+     *     tags={"Bids"},
+     *      summary="Open form to edit bids",
+     *     description="Returns based on id ",
+     *     operationId="editRole",
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="bids id to edit",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Bid")
+     *         )
+     *
+     *     ),
+     *     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid bids id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
+
+
+                /**
+     * @OA\Put(
+     *     path="/bids/{id}",
+     *     tags={"Bids"},
+     *      summary="update bids by database",
+     *     description="Updates bids in database",
+     *     operationId="updateRole",
+     *
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="bids id to update",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Bid updated successfully!",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Bid")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid bids id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
+
+                     /**
+     * @OA\Delete(
+     *     path="/bids/{id}",
+     *     tags={"Bids"},
+     *      summary="remove bids from database",
+     *     description="Deletes bids in database",
+     *     operationId="updateRole",
+     *
+     *   @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         description="bids id to delete",
+     *         required=true,
+     *      ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Bid deleted successfully!",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Bid")
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *         response=500,
+     *         description="Error, please fix the following error(s)!;",
+     *         @OA\JsonContent(
+     *             type="string",
+     *
+     *         )
+     *
+     *     ),
+     * @OA\Response(
+     *      response=404,
+     *      description="Page Not Found. If error persists, contact info@ncdmb.gov.ng"
+     *   ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Invalid bids id"
+     *      )
+     *
+     * )
+     *     )
+     * )
+     */
 class BidController extends Controller
 {
     public function __construct()
