@@ -62,6 +62,7 @@ Route::apiResource('documentTypes', 'DocumentTypeController');
 Route::apiResource('documentTemplates', 'DocumentTemplateController');
 Route::apiResource('documents', 'DocumentController');
 Route::apiResource('procedures', 'ProcedureController');
+Route::apiResource('drafts', 'DraftController');
 
 
 Route::fallback(function () {
