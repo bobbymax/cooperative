@@ -57,6 +57,12 @@ Route::apiResource('brands', 'BrandController');
 Route::apiResource('requisitions', 'RequisitionController');
 Route::apiResource('allocations', 'AllocationController');
 
+// Document Management Routes
+Route::apiResource('documentTypes', 'DocumentTypeController');
+Route::apiResource('documentTemplates', 'DocumentTemplateController');
+Route::apiResource('documents', 'DocumentController');
+Route::apiResource('procedures', 'ProcedureController');
+
 
 Route::fallback(function () {
     return response()->json([
