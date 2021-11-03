@@ -38,7 +38,7 @@ use Illuminate\Support\Str;
      *      required=true,
      *      @OA\Schema(
      *          type="string",
-     *          format="double"
+     *
      *      )
      * ),
      * @OA\Parameter(
